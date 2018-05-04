@@ -1,3 +1,7 @@
+
+This helper library is undergoing QA and currently not recommended for production use
+
+
 # karix-php
 ## Overview 
 
