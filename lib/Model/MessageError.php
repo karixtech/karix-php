@@ -58,7 +58,7 @@ class MessageError implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'code' => 'BigDecimal',
+        'code' => 'string',
         'message' => 'string'
     ];
 

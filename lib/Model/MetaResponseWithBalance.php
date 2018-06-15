@@ -58,8 +58,8 @@ class MetaResponseWithBalance implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'request_uuid' => 'string',
-        'credits_charged' => 'BigDecimal',
-        'available_credits' => 'BigDecimal'
+        'credits_charged' => 'string',
+        'available_credits' => 'string'
     ];
 
     /**
