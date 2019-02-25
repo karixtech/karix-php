@@ -29,6 +29,8 @@
 
 namespace Karix;
 
+use Brick\Math\BigDecimal;
+
 /**
  * ObjectSerializer Class Doc Comment
  *
@@ -262,6 +264,8 @@ class ObjectSerializer
             } else {
                 return null;
             }
+        } else if ($class === 'BigDecimal') {
+            return BigDecimal::of($data);
         } elseif (in_array($class, ['DateTime', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
             settype($data, $class);
             return $data;

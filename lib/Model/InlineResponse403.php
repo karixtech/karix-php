@@ -32,8 +32,6 @@ namespace Karix\Model;
 use \ArrayAccess;
 use \Karix\ObjectSerializer;
 
-use Brick\Math\BigDecimal;
-
 /**
  * InlineResponse403 Class Doc Comment
  *

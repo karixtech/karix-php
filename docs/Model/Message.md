@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **error** | [**\Karix\Model\MessageError**](MessageError.md) |  | [optional] 
 **rate** | [**BigDecimal**](BigDecimal.md) | Cost per part of this message. Refer to [&#x60;text&#x60;](#/definitions/Message/properties/text) | [optional] 
 **refund** | [**BigDecimal**](BigDecimal.md) | In case we are unable to send the message to destination after queueing we will refund the &#x60;total_cost&#x60; you were charged. &#x60;null&#x60; if there was no refund. | [optional] 
-**total_cost** | **string** | Total cost for this message including all parts. Refer to [&#x60;text&#x60;](#/definitions/Message/properties/text) | [optional] 
+**total_cost** | [**BigDecimal**](BigDecimal.md) | Total cost for this message including all parts. Refer to [&#x60;text&#x60;](#/definitions/Message/properties/text) | [optional] 
 **parts** | **int** | Number of parts to the message if the message was too long Refer to [&#x60;text&#x60;](#/definitions/Message/properties/text) | [optional] 
 **message_type** | **string** |  | [optional] 
 **mobile_country_code** | **string** | Mobile Country Code of the destination number. Refer to [Wikipedia: Mobile country code](https://en.wikipedia.org/wiki/Mobile_country_code) | [optional] 

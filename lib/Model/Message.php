@@ -32,8 +32,6 @@ namespace Karix\Model;
 use \ArrayAccess;
 use \Karix\ObjectSerializer;
 
-use Brick\Math\BigDecimal;
-
 /**
  * Message Class Doc Comment
  *
@@ -72,7 +70,7 @@ class Message implements ModelInterface, ArrayAccess
         'error' => '\Karix\Model\MessageError',
         'rate' => 'BigDecimal',
         'refund' => 'BigDecimal',
-        'total_cost' => 'string',
+        'total_cost' => 'BigDecimal',
         'parts' => 'int',
         'message_type' => 'string',
         'mobile_country_code' => 'string',
@@ -98,7 +96,7 @@ class Message implements ModelInterface, ArrayAccess
         'error' => null,
         'rate' => 'number',
         'refund' => 'number',
-        'total_cost' => null,
+        'total_cost' => 'number',
         'parts' => null,
         'message_type' => null,
         'mobile_country_code' => null,
@@ -695,7 +693,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Gets total_cost
      *
-     * @return string
+     * @return BigDecimal
      */
     public function getTotalCost()
     {
@@ -705,7 +703,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Sets total_cost
      *
-     * @param string $total_cost Total cost for this message including all parts. Refer to [`text`](#/definitions/Message/properties/text)
+     * @param BigDecimal $total_cost Total cost for this message including all parts. Refer to [`text`](#/definitions/Message/properties/text)
      *
      * @return $this
      */
