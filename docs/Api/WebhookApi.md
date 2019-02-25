@@ -1,4 +1,4 @@
-# Swagger\Client\WebhookApi
+# Karix\WebhookApi
 
 All URIs are relative to *https://api.karix.io*
 
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **createWebhook**
-> \Swagger\Client\Model\InlineResponse2011 createWebhook($api_version, $webhook)
+> \Karix\Model\InlineResponse2011 createWebhook($webhook, $api_version)
 
 Create webhooks to receive Message
 
@@ -24,22 +24,22 @@ To receive messages you will need to setup a webhook. A webhook is then attached
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\WebhookApi(
+$apiInstance = new Karix\Api\WebhookApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
+$webhook = new \Karix\Model\CreateWebhook(); // \Karix\Model\CreateWebhook | Create Webhook object
 $api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
-$webhook = new \Swagger\Client\Model\CreateWebhook(); // \Swagger\Client\Model\CreateWebhook | Create Webhook object
 
 try {
-    $result = $apiInstance->createWebhook($api_version, $webhook);
+    $result = $apiInstance->createWebhook($webhook, $api_version);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->createWebhook: ', $e->getMessage(), PHP_EOL;
@@ -51,12 +51,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **webhook** | [**\Karix\Model\CreateWebhook**](../Model/CreateWebhook.md)| Create Webhook object |
  **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
- **webhook** | [**\Swagger\Client\Model\CreateWebhook**](../Model/CreateWebhook.md)| Create Webhook object | [optional]
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
 
 ### Authorization
 
@@ -82,12 +82,12 @@ Delete a webhook by ID
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\WebhookApi(
+$apiInstance = new Karix\Api\WebhookApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -127,7 +127,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getWebhook**
-> \Swagger\Client\Model\InlineResponse2003 getWebhook($api_version, $offset, $limit)
+> \Karix\Model\InlineResponse2003 getWebhook($api_version, $offset, $limit)
 
 Get a list of your webhooks
 
@@ -139,12 +139,12 @@ Get a list of your webhooks
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\WebhookApi(
+$apiInstance = new Karix\Api\WebhookApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2003**](../Model/InlineResponse2003.md)
+[**\Karix\Model\InlineResponse2003**](../Model/InlineResponse2003.md)
 
 ### Authorization
 
@@ -187,7 +187,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getWebhookById**
-> \Swagger\Client\Model\InlineResponse2011 getWebhookById($uid, $api_version)
+> \Karix\Model\InlineResponse2011 getWebhookById($uid, $api_version)
 
 Get a webhook by ID
 
@@ -199,12 +199,12 @@ Get a webhook by ID
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\WebhookApi(
+$apiInstance = new Karix\Api\WebhookApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -231,7 +231,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
 
 ### Authorization
 
@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **patchWebhook**
-> \Swagger\Client\Model\InlineResponse2011 patchWebhook($uid, $api_version, $webhook)
+> \Karix\Model\InlineResponse2011 patchWebhook($uid, $webhook, $api_version)
 
 Edit a webhook
 
@@ -257,23 +257,23 @@ Edit a webhook
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\WebhookApi(
+$apiInstance = new Karix\Api\WebhookApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the webhook to edit.
+$webhook = new \Karix\Model\EditWebhook(); // \Karix\Model\EditWebhook | Webhook object
 $api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
-$webhook = new \Swagger\Client\Model\EditWebhook(); // \Swagger\Client\Model\EditWebhook | Webhook object
 
 try {
-    $result = $apiInstance->patchWebhook($uid, $api_version, $webhook);
+    $result = $apiInstance->patchWebhook($uid, $webhook, $api_version);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->patchWebhook: ', $e->getMessage(), PHP_EOL;
@@ -286,12 +286,12 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the webhook to edit. |
+ **webhook** | [**\Karix\Model\EditWebhook**](../Model/EditWebhook.md)| Webhook object |
  **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
- **webhook** | [**\Swagger\Client\Model\EditWebhook**](../Model/EditWebhook.md)| Webhook object | [optional]
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
 
 ### Authorization
 

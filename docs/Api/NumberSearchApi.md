@@ -1,4 +1,4 @@
-# Swagger\Client\NumberSearchApi
+# Karix\NumberSearchApi
 
 All URIs are relative to *https://api.karix.io*
 
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **numbersearchGet**
-> \Swagger\Client\Model\InlineResponse2006 numbersearchGet($api_version, $offset, $limit, $country, $prefix, $contains, $number_type)
+> \Karix\Model\InlineResponse2006 numbersearchGet($api_version, $offset, $limit, $country, $prefix, $contains, $number_type)
 
 Query for phone numbers in our inventory.
 
@@ -20,12 +20,12 @@ Query for phone numbers in our inventory
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\NumberSearchApi(
+$apiInstance = new Karix\Api\NumberSearchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2006**](../Model/InlineResponse2006.md)
+[**\Karix\Model\InlineResponse2006**](../Model/InlineResponse2006.md)
 
 ### Authorization
 

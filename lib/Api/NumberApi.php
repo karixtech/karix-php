@@ -4,7 +4,7 @@
  * PHP version 5
  *
  * @category Class
- * @package  Swagger\Client
+ * @package  Karix
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
@@ -12,12 +12,12 @@
 /**
  * karix api
  *
- * # Overview  Karix API lets you interact with the Karix platform. It allows you to query your account, set up webhooks, send messages and buy phone numbers.  # API and Clients Versioning  Karix APIs are versioned using the format vX.Y where X is the major version number and Y is minor. All minor version changes are backwards compatible but major releases are not. Please be careful when upgrading.  A new user account is pinned to the latest version at the time of first request. By default every request sent Karix is processed using that version, even if there have been subsequent breaking changes. This is done to prevent existing user applications from breaking. You can change the pinned version for your account using the account dashboard. The default API version can be overridden by specifying the header `api-version`. Note: Specifying this value will not change your pinned version for other calls.  Karix also provides HTTP API clients for all major languages. Release versions of these clients correspond to their API Version supported. Client version vX.Y.Z supports API version vX.Y. HTTP Clients are configured to use `api-version` header for that client version. When using official Karix HTTP Clients only, you dont need to concern yourself with pinned version. To upgrade your API version simply update the client.  # Common Request Structures  All Karix APIs follow a common REST format with the following resources:   - account   - message   - webhook   - number  ## Creating a resource To create a request send a `POST` request with the desired parameters in a JSON object to `/<resource>/` url. A successful response will contain the details of the single resource created with HTTP status code `201 Created`. Note: An exception to this is the `Create Message` API which is a bulk API and returns       a list of message records.  ## Fetching a resource To fetch a resource by its Unique ID send a `GET` request to `/<resource>/<uid>/` where `uid` is the Alphanumeric Unique ID of the resource. A successful response will contain the details of the single resource fetched with HTTP status code `200 OK`  ## Editing a resource To edit certain parameters of a resource send a `PATCH` request to `/<resource>/<uid>/` where `uid` is the Alphanumeric Unique ID of the resource, with a JSON object containing only the parameters which need to be updated. Edit resource APIs generally have no required parameters. A successful response will contain all the details of the single resource after editing.  ## Deleting a resource To delete a resource send a `DELETE` request to `/<resource>/<uid>/` where `uid` is the Alphanumeric Unique ID of the resource. A successful response will return HTTP status code `204 No Content` with no body.  ## Fetching a list of resources To fetch a list of resources send a `GET` request to `/<resource>/` with filters as GET parameters. A successful response will contain a list of filtered paginated objects with HTTP status code `200 OK`.  ### Pagination Pagination for list APIs are controlled using GET parameters:   - `limit`: Number of objects to be returned   - `offset`: Number of objects to skip before collecting the output list.  # Common Response Structures  All Karix APIs follow some common respose structures.  ## Success Responses  ### Single Resource Response  Responses returning a single object will have the following keys | Key           | Child Key     | Description                               | |:------------- |:------------- |:----------------------------------------- | | meta          |               | Meta Details about request and response   | |               | request_uuid  | Unique request identifier                 | | data          |               | Details of the object                     |  ### List Resource Response  Responses returning a list of objects will have the following keys | Key           | Child Key     | Description                               | |:------------- |:------------- |:----------------------------------------- | | meta          |               | Meta Details about request and response   | |               | request_uuid  | Unique request identifier                 | |               | previous      | Link to the previous page of the list     | |               | next          | Link to the next page of the list         | |               | count         | Total number of objects over all pages    | |               | limit         | Limit the API was requested with          | |               | offset        | Page Offset the API was requested with    | | objects       |               | List of objects with details              |  ## Error Responses  ### Validation Error Response  Responses for requests which failed due to validation errors will have the follwing keys: | Key           | Child Key     | Description                                | |:------------- |:------------- |:------------------------------------------ | | meta          |               | Meta Details about request and response    | |               | request_uuid  | Unique request identifier                  | | error         |               | Details for the error                      | |               | message       | Error message                              | |               | param         | (Optional) parameter this error relates to |  Validation error responses will return HTTP Status Code `400 Bad Request`  ### Insufficient Balance Response  Some requests will require to consume account credits. In case of insufficient balance the following keys will be returned: | Key           | Child Key     | Description                               | |:------------- |:------------- |:----------------------------------------- | | meta          |               | Meta Details about request and response   | |               | request_uuid  | Unique request identifier                 | | error         |               | Details for the error                     | |               | message       | `Insufficient Balance`                    |  Insufficient balance response will return HTTP Status Code `402 Payment Required`
+ * Karix API lets you interact with the Karix platform. It allows you to query your account, set up webhooks, send messages and buy phone numbers.
  *
  * OpenAPI spec version: 1.0
  * Contact: support@karix.io
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- * Swagger Codegen version: 2.3.1
+ * Swagger Codegen version: unset
  */
 
 /**
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Swagger\Client\Api;
+namespace Karix\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -34,16 +34,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use Swagger\Client\ApiException;
-use Swagger\Client\Configuration;
-use Swagger\Client\HeaderSelector;
-use Swagger\Client\ObjectSerializer;
+use Karix\ApiException;
+use Karix\Configuration;
+use Karix\HeaderSelector;
+use Karix\ObjectSerializer;
 
 /**
  * NumberApi Class Doc Comment
  *
  * @category Class
- * @package  Swagger\Client
+ * @package  Karix
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
@@ -58,6 +58,11 @@ class NumberApi
      * @var Configuration
      */
     protected $config;
+
+    /**
+     * @var HeaderSelector
+     */
+    protected $headerSelector;
 
     /**
      * @param ClientInterface $client
@@ -94,9 +99,9 @@ class NumberApi
      * @param  string $contains Filter by numbers which contain this value (optional)
      * @param  string[] $number_type Filter by number type: fixed, mobile, tollfree (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2004
+     * @return \Karix\Model\InlineResponse2004
      */
     public function getNumber($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
@@ -116,13 +121,13 @@ class NumberApi
      * @param  string $contains Filter by numbers which contain this value (optional)
      * @param  string[] $number_type Filter by number type: fixed, mobile, tollfree (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
      */
     public function getNumberWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2004';
+        $returnType = '\Karix\Model\InlineResponse2004';
         $request = $this->getNumberRequest($api_version, $offset, $limit, $country, $contains, $number_type);
 
         try {
@@ -174,7 +179,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse2004',
+                        '\Karix\Model\InlineResponse2004',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -182,7 +187,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse403',
+                        '\Karix\Model\InlineResponse403',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -190,7 +195,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -242,7 +247,7 @@ class NumberApi
      */
     public function getNumberAsyncWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2004';
+        $returnType = '\Karix\Model\InlineResponse2004';
         $request = $this->getNumberRequest($api_version, $offset, $limit, $country, $contains, $number_type);
 
         return $this->client
@@ -410,7 +415,7 @@ class NumberApi
      * @param  int $num Number which needs to be unrented (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -427,7 +432,7 @@ class NumberApi
      * @param  int $num Number which needs to be unrented (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -471,7 +476,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse403',
+                        '\Karix\Model\InlineResponse403',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -479,7 +484,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse404',
+                        '\Karix\Model\InlineResponse404',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -487,7 +492,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -569,7 +574,7 @@ class NumberApi
     protected function numberNumDeleteRequest($num, $api_version = '1.0')
     {
         // verify the required parameter 'num' is set
-        if ($num === null) {
+        if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $num when calling numberNumDelete'
             );
@@ -672,9 +677,9 @@ class NumberApi
      * @param  int $num Number for which details need to be fetched (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2005
+     * @return \Karix\Model\InlineResponse2005
      */
     public function numberNumGet($num, $api_version = '1.0')
     {
@@ -690,13 +695,13 @@ class NumberApi
      * @param  int $num Number for which details need to be fetched (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
      */
     public function numberNumGetWithHttpInfo($num, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
+        $returnType = '\Karix\Model\InlineResponse2005';
         $request = $this->numberNumGetRequest($num, $api_version);
 
         try {
@@ -748,7 +753,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse2005',
+                        '\Karix\Model\InlineResponse2005',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -756,7 +761,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse403',
+                        '\Karix\Model\InlineResponse403',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -764,7 +769,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse404',
+                        '\Karix\Model\InlineResponse404',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -772,7 +777,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -816,7 +821,7 @@ class NumberApi
      */
     public function numberNumGetAsyncWithHttpInfo($num, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
+        $returnType = '\Karix\Model\InlineResponse2005';
         $request = $this->numberNumGetRequest($num, $api_version);
 
         return $this->client
@@ -868,7 +873,7 @@ class NumberApi
     protected function numberNumGetRequest($num, $api_version = '1.0')
     {
         // verify the required parameter 'num' is set
-        if ($num === null) {
+        if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $num when calling numberNumGet'
             );
@@ -969,16 +974,16 @@ class NumberApi
      * Edit phone number belonging to your account
      *
      * @param  int $num Number which needs to be edited (required)
+     * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
-     * @param  \Swagger\Client\Model\EditAccountNumber $number Account Number object (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2005
+     * @return \Karix\Model\InlineResponse2005
      */
-    public function numberNumPatch($num, $api_version = '1.0', $number = null)
+    public function numberNumPatch($num, $number, $api_version = '1.0')
     {
-        list($response) = $this->numberNumPatchWithHttpInfo($num, $api_version, $number);
+        list($response) = $this->numberNumPatchWithHttpInfo($num, $number, $api_version);
         return $response;
     }
 
@@ -988,17 +993,17 @@ class NumberApi
      * Edit phone number belonging to your account
      *
      * @param  int $num Number which needs to be edited (required)
+     * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
-     * @param  \Swagger\Client\Model\EditAccountNumber $number Account Number object (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumPatchWithHttpInfo($num, $api_version = '1.0', $number = null)
+    public function numberNumPatchWithHttpInfo($num, $number, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
-        $request = $this->numberNumPatchRequest($num, $api_version, $number);
+        $returnType = '\Karix\Model\InlineResponse2005';
+        $request = $this->numberNumPatchRequest($num, $number, $api_version);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1049,7 +1054,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse2005',
+                        '\Karix\Model\InlineResponse2005',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1057,7 +1062,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse403',
+                        '\Karix\Model\InlineResponse403',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1065,7 +1070,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse404',
+                        '\Karix\Model\InlineResponse404',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1073,7 +1078,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1089,15 +1094,15 @@ class NumberApi
      * Edit phone number belonging to your account
      *
      * @param  int $num Number which needs to be edited (required)
+     * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
-     * @param  \Swagger\Client\Model\EditAccountNumber $number Account Number object (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsync($num, $api_version = '1.0', $number = null)
+    public function numberNumPatchAsync($num, $number, $api_version = '1.0')
     {
-        return $this->numberNumPatchAsyncWithHttpInfo($num, $api_version, $number)
+        return $this->numberNumPatchAsyncWithHttpInfo($num, $number, $api_version)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1111,16 +1116,16 @@ class NumberApi
      * Edit phone number belonging to your account
      *
      * @param  int $num Number which needs to be edited (required)
+     * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
-     * @param  \Swagger\Client\Model\EditAccountNumber $number Account Number object (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsyncWithHttpInfo($num, $api_version = '1.0', $number = null)
+    public function numberNumPatchAsyncWithHttpInfo($num, $number, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2005';
-        $request = $this->numberNumPatchRequest($num, $api_version, $number);
+        $returnType = '\Karix\Model\InlineResponse2005';
+        $request = $this->numberNumPatchRequest($num, $number, $api_version);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1163,18 +1168,24 @@ class NumberApi
      * Create request for operation 'numberNumPatch'
      *
      * @param  int $num Number which needs to be edited (required)
+     * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
-     * @param  \Swagger\Client\Model\EditAccountNumber $number Account Number object (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumPatchRequest($num, $api_version = '1.0', $number = null)
+    protected function numberNumPatchRequest($num, $number, $api_version = '1.0')
     {
         // verify the required parameter 'num' is set
-        if ($num === null) {
+        if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $num when calling numberNumPatch'
+            );
+        }
+        // verify the required parameter 'number' is set
+        if ($number === null || (is_array($number) && count($number) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $number when calling numberNumPatch'
             );
         }
 
@@ -1275,12 +1286,12 @@ class NumberApi
      *
      * Rent a phone number
      *
-     * @param  \Swagger\Client\Model\RentNumber $number Rent Details object (required)
+     * @param  \Karix\Model\RentNumber $number Rent Details object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\InlineResponse2012
+     * @return \Karix\Model\InlineResponse2012
      */
     public function rentNumber($number, $api_version = '1.0')
     {
@@ -1293,16 +1304,16 @@ class NumberApi
      *
      * Rent a phone number
      *
-     * @param  \Swagger\Client\Model\RentNumber $number Rent Details object (required)
+     * @param  \Karix\Model\RentNumber $number Rent Details object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\InlineResponse2012, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\InlineResponse2012, HTTP status code, HTTP response headers (array of strings)
      */
     public function rentNumberWithHttpInfo($number, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2012';
+        $returnType = '\Karix\Model\InlineResponse2012';
         $request = $this->rentNumberRequest($number, $api_version);
 
         try {
@@ -1354,7 +1365,7 @@ class NumberApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse2012',
+                        '\Karix\Model\InlineResponse2012',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1362,7 +1373,7 @@ class NumberApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1370,7 +1381,7 @@ class NumberApi
                 case 402:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse402',
+                        '\Karix\Model\InlineResponse402',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1378,7 +1389,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse403',
+                        '\Karix\Model\InlineResponse403',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1386,7 +1397,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse404',
+                        '\Karix\Model\InlineResponse404',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1394,7 +1405,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Swagger\Client\Model\InlineResponse500',
+                        '\Karix\Model\InlineResponse500',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1409,7 +1420,7 @@ class NumberApi
      *
      * Rent a phone number
      *
-     * @param  \Swagger\Client\Model\RentNumber $number Rent Details object (required)
+     * @param  \Karix\Model\RentNumber $number Rent Details object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
@@ -1430,7 +1441,7 @@ class NumberApi
      *
      * Rent a phone number
      *
-     * @param  \Swagger\Client\Model\RentNumber $number Rent Details object (required)
+     * @param  \Karix\Model\RentNumber $number Rent Details object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
@@ -1438,7 +1449,7 @@ class NumberApi
      */
     public function rentNumberAsyncWithHttpInfo($number, $api_version = '1.0')
     {
-        $returnType = '\Swagger\Client\Model\InlineResponse2012';
+        $returnType = '\Karix\Model\InlineResponse2012';
         $request = $this->rentNumberRequest($number, $api_version);
 
         return $this->client
@@ -1481,7 +1492,7 @@ class NumberApi
     /**
      * Create request for operation 'rentNumber'
      *
-     * @param  \Swagger\Client\Model\RentNumber $number Rent Details object (required)
+     * @param  \Karix\Model\RentNumber $number Rent Details object (required)
      * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
@@ -1490,7 +1501,7 @@ class NumberApi
     protected function rentNumberRequest($number, $api_version = '1.0')
     {
         // verify the required parameter 'number' is set
-        if ($number === null) {
+        if ($number === null || (is_array($number) && count($number) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $number when calling rentNumber'
             );

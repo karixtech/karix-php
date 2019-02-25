@@ -1,4 +1,4 @@
-# Swagger\Client\MessageApi
+# Karix\MessageApi
 
 All URIs are relative to *https://api.karix.io*
 
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **getMessage**
-> \Swagger\Client\Model\InlineResponse2001 getMessage($api_version, $direction, $account_uid, $state, $offset, $limit)
+> \Karix\Model\InlineResponse2001 getMessage($api_version, $direction, $account_uid, $state, $offset, $limit)
 
 Get list of messages sent or received
 
@@ -22,12 +22,12 @@ Get list of messages sent or received. Sorted by descending order of `queued_tim
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\MessageApi(
+$apiInstance = new Karix\Api\MessageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Karix\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
 
 ### Authorization
 
@@ -76,7 +76,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getMessageById**
-> \Swagger\Client\Model\InlineResponse2002 getMessageById($uid, $api_version)
+> \Karix\Model\InlineResponse2002 getMessageById($uid, $api_version)
 
 Get message details by id.
 
@@ -88,12 +88,12 @@ Get message details by id.
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\MessageApi(
+$apiInstance = new Karix\Api\MessageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -120,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse2002**](../Model/InlineResponse2002.md)
+[**\Karix\Model\InlineResponse2002**](../Model/InlineResponse2002.md)
 
 ### Authorization
 
@@ -134,7 +134,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **sendMessage**
-> \Swagger\Client\Model\InlineResponse202 sendMessage($api_version, $message)
+> \Karix\Model\InlineResponse202 sendMessage($message, $api_version)
 
 Send a message to a list of phone numbers
 
@@ -146,22 +146,22 @@ Send a message to a list of destinations.   - A successful `202` response means 
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure HTTP basic authorization: basicAuth
-$config = Swagger\Client\Configuration::getDefaultConfiguration()
+$config = Karix\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
 
 
-$apiInstance = new Swagger\Client\Api\MessageApi(
+$apiInstance = new Karix\Api\MessageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
+$message = new \Karix\Model\CreateMessage(); // \Karix\Model\CreateMessage | Create Message object
 $api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
-$message = new \Swagger\Client\Model\CreateMessage(); // \Swagger\Client\Model\CreateMessage | Create Message object
 
 try {
-    $result = $apiInstance->sendMessage($api_version, $message);
+    $result = $apiInstance->sendMessage($message, $api_version);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MessageApi->sendMessage: ', $e->getMessage(), PHP_EOL;
@@ -173,12 +173,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **message** | [**\Karix\Model\CreateMessage**](../Model/CreateMessage.md)| Create Message object |
  **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
- **message** | [**\Swagger\Client\Model\CreateMessage**](../Model/CreateMessage.md)| Create Message object | [optional]
 
 ### Return type
 
-[**\Swagger\Client\Model\InlineResponse202**](../Model/InlineResponse202.md)
+[**\Karix\Model\InlineResponse202**](../Model/InlineResponse202.md)
 
 ### Authorization
 
