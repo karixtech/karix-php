@@ -61,7 +61,7 @@ class AccountNumber implements ModelInterface, ArrayAccess
         'alias' => 'string',
         'account_uid' => 'string',
         'number_details' => '\Karix\Model\PhoneNumber',
-        'date_rented' => 'string'
+        'date_rented' => '\DateTime'
     ];
 
     /**
@@ -74,7 +74,7 @@ class AccountNumber implements ModelInterface, ArrayAccess
         'alias' => null,
         'account_uid' => null,
         'number_details' => null,
-        'date_rented' => null
+        'date_rented' => 'date-time'
     ];
 
     /**
@@ -327,7 +327,7 @@ class AccountNumber implements ModelInterface, ArrayAccess
     /**
      * Gets date_rented
      *
-     * @return string
+     * @return \DateTime
      */
     public function getDateRented()
     {
@@ -337,7 +337,7 @@ class AccountNumber implements ModelInterface, ArrayAccess
     /**
      * Sets date_rented
      *
-     * @param string $date_rented Timestamp when this number was rented
+     * @param \DateTime $date_rented Timestamp when this number was rented
      *
      * @return $this
      */

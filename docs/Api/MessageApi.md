@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **getMessage**
-> \Karix\Model\InlineResponse2001 getMessage($api_version, $direction, $account_uid, $state, $offset, $limit)
+> \Karix\Model\MessageListResponse getMessage($direction, $account_uid, $state, $offset, $limit)
 
 Get list of messages sent or received
 
@@ -33,7 +33,6 @@ $apiInstance = new Karix\Api\MessageApi(
     new GuzzleHttp\Client(),
     $config
 );
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 $direction = "direction_example"; // string | Message direction, inbound or outbound to filter on. If not provided, the filter is not applied.
 $account_uid = "account_uid_example"; // string | Filter the result list by the account which sent the message - If not provided or `null` or empty string, no filter will be placed   and all the messages by the main account and its subaccounts are returned - To get the list of messages sent by main account only, set `account_uid`   to main account's uid.
 $state = "state_example"; // string | Filter the result on the basis of message state.
@@ -41,7 +40,7 @@ $offset = 0; // int | The number of items to skip before starting to collect the
 $limit = 10; // int | The numbers of items to return.
 
 try {
-    $result = $apiInstance->getMessage($api_version, $direction, $account_uid, $state, $offset, $limit);
+    $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MessageApi->getMessage: ', $e->getMessage(), PHP_EOL;
@@ -53,7 +52,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
  **direction** | **string**| Message direction, inbound or outbound to filter on. If not provided, the filter is not applied. | [optional]
  **account_uid** | **string**| Filter the result list by the account which sent the message - If not provided or &#x60;null&#x60; or empty string, no filter will be placed   and all the messages by the main account and its subaccounts are returned - To get the list of messages sent by main account only, set &#x60;account_uid&#x60;   to main account&#39;s uid. | [optional]
  **state** | **string**| Filter the result on the basis of message state. | [optional]
@@ -62,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2001**](../Model/InlineResponse2001.md)
+[**\Karix\Model\MessageListResponse**](../Model/MessageListResponse.md)
 
 ### Authorization
 
@@ -76,7 +74,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getMessageById**
-> \Karix\Model\InlineResponse2002 getMessageById($uid, $api_version)
+> \Karix\Model\MessageResponse getMessageById($uid)
 
 Get message details by id.
 
@@ -100,10 +98,9 @@ $apiInstance = new Karix\Api\MessageApi(
     $config
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the message to get.
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->getMessageById($uid, $api_version);
+    $result = $apiInstance->getMessageById($uid);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MessageApi->getMessageById: ', $e->getMessage(), PHP_EOL;
@@ -116,11 +113,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the message to get. |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2002**](../Model/InlineResponse2002.md)
+[**\Karix\Model\MessageResponse**](../Model/MessageResponse.md)
 
 ### Authorization
 
@@ -134,7 +130,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **sendMessage**
-> \Karix\Model\InlineResponse202 sendMessage($message, $api_version)
+> \Karix\Model\MessageCreatedResponse sendMessage($message)
 
 Send a message to a list of phone numbers
 
@@ -158,10 +154,9 @@ $apiInstance = new Karix\Api\MessageApi(
     $config
 );
 $message = new \Karix\Model\CreateMessage(); // \Karix\Model\CreateMessage | Create Message object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->sendMessage($message, $api_version);
+    $result = $apiInstance->sendMessage($message);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MessageApi->sendMessage: ', $e->getMessage(), PHP_EOL;
@@ -174,11 +169,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **message** | [**\Karix\Model\CreateMessage**](../Model/CreateMessage.md)| Create Message object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse202**](../Model/InlineResponse202.md)
+[**\Karix\Model\MessageCreatedResponse**](../Model/MessageCreatedResponse.md)
 
 ### Authorization
 

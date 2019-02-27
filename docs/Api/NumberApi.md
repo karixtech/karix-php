@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **getNumber**
-> \Karix\Model\InlineResponse2004 getNumber($api_version, $offset, $limit, $country, $contains, $number_type)
+> \Karix\Model\AccountNumberListResponse getNumber($offset, $limit, $country, $contains, $number_type)
 
 Get details of all phone numbers linked to your account.
 
@@ -35,7 +35,6 @@ $apiInstance = new Karix\Api\NumberApi(
     new GuzzleHttp\Client(),
     $config
 );
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 $offset = 0; // int | The number of items to skip before starting to collect the result set.
 $limit = 10; // int | The numbers of items to return.
 $country = "country_example"; // string | Filter by country ISO
@@ -43,7 +42,7 @@ $contains = "contains_example"; // string | Filter by numbers which contain this
 $number_type = array("number_type_example"); // string[] | Filter by number type: fixed, mobile, tollfree
 
 try {
-    $result = $apiInstance->getNumber($api_version, $offset, $limit, $country, $contains, $number_type);
+    $result = $apiInstance->getNumber($offset, $limit, $country, $contains, $number_type);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NumberApi->getNumber: ', $e->getMessage(), PHP_EOL;
@@ -55,7 +54,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
  **offset** | **int**| The number of items to skip before starting to collect the result set. | [optional] [default to 0]
  **limit** | **int**| The numbers of items to return. | [optional] [default to 10]
  **country** | **string**| Filter by country ISO | [optional]
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2004**](../Model/InlineResponse2004.md)
+[**\Karix\Model\AccountNumberListResponse**](../Model/AccountNumberListResponse.md)
 
 ### Authorization
 
@@ -78,7 +76,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **numberNumDelete**
-> numberNumDelete($num, $api_version)
+> numberNumDelete($num)
 
 Unrent number from your account
 
@@ -102,10 +100,9 @@ $apiInstance = new Karix\Api\NumberApi(
     $config
 );
 $num = 56; // int | Number which needs to be unrented
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $apiInstance->numberNumDelete($num, $api_version);
+    $apiInstance->numberNumDelete($num);
 } catch (Exception $e) {
     echo 'Exception when calling NumberApi->numberNumDelete: ', $e->getMessage(), PHP_EOL;
 }
@@ -117,7 +114,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **num** | **int**| Number which needs to be unrented |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
@@ -135,7 +131,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **numberNumGet**
-> \Karix\Model\InlineResponse2005 numberNumGet($num, $api_version)
+> \Karix\Model\AccountNumberResponse numberNumGet($num)
 
 Get details of a number
 
@@ -159,10 +155,9 @@ $apiInstance = new Karix\Api\NumberApi(
     $config
 );
 $num = 56; // int | Number for which details need to be fetched
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->numberNumGet($num, $api_version);
+    $result = $apiInstance->numberNumGet($num);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NumberApi->numberNumGet: ', $e->getMessage(), PHP_EOL;
@@ -175,11 +170,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **num** | **int**| Number for which details need to be fetched |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2005**](../Model/InlineResponse2005.md)
+[**\Karix\Model\AccountNumberResponse**](../Model/AccountNumberResponse.md)
 
 ### Authorization
 
@@ -193,7 +187,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **numberNumPatch**
-> \Karix\Model\InlineResponse2005 numberNumPatch($num, $number, $api_version)
+> \Karix\Model\AccountNumberResponse numberNumPatch($num, $number)
 
 Edit phone number belonging to your account
 
@@ -218,10 +212,9 @@ $apiInstance = new Karix\Api\NumberApi(
 );
 $num = 56; // int | Number which needs to be edited
 $number = new \Karix\Model\EditAccountNumber(); // \Karix\Model\EditAccountNumber | Account Number object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->numberNumPatch($num, $number, $api_version);
+    $result = $apiInstance->numberNumPatch($num, $number);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NumberApi->numberNumPatch: ', $e->getMessage(), PHP_EOL;
@@ -235,11 +228,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **num** | **int**| Number which needs to be edited |
  **number** | [**\Karix\Model\EditAccountNumber**](../Model/EditAccountNumber.md)| Account Number object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2005**](../Model/InlineResponse2005.md)
+[**\Karix\Model\AccountNumberResponse**](../Model/AccountNumberResponse.md)
 
 ### Authorization
 
@@ -253,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **rentNumber**
-> \Karix\Model\InlineResponse2012 rentNumber($number, $api_version)
+> \Karix\Model\NumberRentedResponse rentNumber($number)
 
 Rent a phone number
 
@@ -277,10 +269,9 @@ $apiInstance = new Karix\Api\NumberApi(
     $config
 );
 $number = new \Karix\Model\RentNumber(); // \Karix\Model\RentNumber | Rent Details object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->rentNumber($number, $api_version);
+    $result = $apiInstance->rentNumber($number);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NumberApi->rentNumber: ', $e->getMessage(), PHP_EOL;
@@ -293,11 +284,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **number** | [**\Karix\Model\RentNumber**](../Model/RentNumber.md)| Rent Details object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2012**](../Model/InlineResponse2012.md)
+[**\Karix\Model\NumberRentedResponse**](../Model/NumberRentedResponse.md)
 
 ### Authorization
 

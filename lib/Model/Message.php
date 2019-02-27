@@ -63,9 +63,9 @@ class Message implements ModelInterface, ArrayAccess
         'destination' => 'string',
         'status' => 'string',
         'text' => 'string',
-        'queued_time' => 'string',
-        'sent_time' => 'string',
-        'updated_time' => 'string',
+        'queued_time' => '\DateTime',
+        'sent_time' => '\DateTime',
+        'updated_time' => '\DateTime',
         'direction' => 'string',
         'error' => '\Karix\Model\MessageError',
         'rate' => 'BigDecimal',
@@ -89,9 +89,9 @@ class Message implements ModelInterface, ArrayAccess
         'destination' => null,
         'status' => null,
         'text' => null,
-        'queued_time' => null,
-        'sent_time' => null,
-        'updated_time' => null,
+        'queued_time' => 'date-time',
+        'sent_time' => 'date-time',
+        'updated_time' => 'date-time',
         'direction' => null,
         'error' => null,
         'rate' => 'number',
@@ -516,7 +516,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Gets queued_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getQueuedTime()
     {
@@ -526,7 +526,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Sets queued_time
      *
-     * @param string $queued_time The timestamp when message was accepted and queued in Karix system
+     * @param \DateTime $queued_time The timestamp when message was accepted and queued in Karix system
      *
      * @return $this
      */
@@ -540,7 +540,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Gets sent_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getSentTime()
     {
@@ -550,7 +550,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Sets sent_time
      *
-     * @param string $sent_time The timestamp when the message was processed and sent to destination
+     * @param \DateTime $sent_time The timestamp when the message was processed and sent to destination
      *
      * @return $this
      */
@@ -564,7 +564,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Gets updated_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getUpdatedTime()
     {
@@ -574,7 +574,7 @@ class Message implements ModelInterface, ArrayAccess
     /**
      * Sets updated_time
      *
-     * @param string $updated_time The timestamp when the status of message was last updated. - If the current status is `delivered` then this timestamp also represents   delivered time - If the current status is `undelivered` then this timestamp also represents   undelivered time
+     * @param \DateTime $updated_time The timestamp when the status of message was last updated. - If the current status is `delivered` then this timestamp also represents   delivered time - If the current status is `undelivered` then this timestamp also represents   undelivered time
      *
      * @return $this
      */

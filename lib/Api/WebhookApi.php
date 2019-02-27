@@ -93,15 +93,14 @@ class WebhookApi
      * Create webhooks to receive Message
      *
      * @param  \Karix\Model\CreateWebhook $webhook Create Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2011
+     * @return \Karix\Model\WebhookResponse
      */
-    public function createWebhook($webhook, $api_version = '1.0')
+    public function createWebhook($webhook)
     {
-        list($response) = $this->createWebhookWithHttpInfo($webhook, $api_version);
+        list($response) = $this->createWebhookWithHttpInfo($webhook);
         return $response;
     }
 
@@ -111,16 +110,15 @@ class WebhookApi
      * Create webhooks to receive Message
      *
      * @param  \Karix\Model\CreateWebhook $webhook Create Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\WebhookResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createWebhookWithHttpInfo($webhook, $api_version = '1.0')
+    public function createWebhookWithHttpInfo($webhook)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->createWebhookRequest($webhook, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->createWebhookRequest($webhook);
 
         try {
             $options = $this->createHttpClientOption();
@@ -171,7 +169,7 @@ class WebhookApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2011',
+                        '\Karix\Model\WebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -179,7 +177,7 @@ class WebhookApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -187,7 +185,7 @@ class WebhookApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -195,7 +193,7 @@ class WebhookApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -211,14 +209,13 @@ class WebhookApi
      * Create webhooks to receive Message
      *
      * @param  \Karix\Model\CreateWebhook $webhook Create Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createWebhookAsync($webhook, $api_version = '1.0')
+    public function createWebhookAsync($webhook)
     {
-        return $this->createWebhookAsyncWithHttpInfo($webhook, $api_version)
+        return $this->createWebhookAsyncWithHttpInfo($webhook)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -232,15 +229,14 @@ class WebhookApi
      * Create webhooks to receive Message
      *
      * @param  \Karix\Model\CreateWebhook $webhook Create Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createWebhookAsyncWithHttpInfo($webhook, $api_version = '1.0')
+    public function createWebhookAsyncWithHttpInfo($webhook)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->createWebhookRequest($webhook, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->createWebhookRequest($webhook);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -283,13 +279,20 @@ class WebhookApi
      * Create request for operation 'createWebhook'
      *
      * @param  \Karix\Model\CreateWebhook $webhook Create Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createWebhookRequest($webhook, $api_version = '1.0')
+    protected function createWebhookRequest($webhook)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling createWebhook'
+            );
+        }
         // verify the required parameter 'webhook' is set
         if ($webhook === null || (is_array($webhook) && count($webhook) === 0)) {
             throw new \InvalidArgumentException(
@@ -387,15 +390,14 @@ class WebhookApi
      * Delete a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to be deleted. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteWebhookById($uid, $api_version = '1.0')
+    public function deleteWebhookById($uid)
     {
-        $this->deleteWebhookByIdWithHttpInfo($uid, $api_version);
+        $this->deleteWebhookByIdWithHttpInfo($uid);
     }
 
     /**
@@ -404,16 +406,15 @@ class WebhookApi
      * Delete a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to be deleted. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWebhookByIdWithHttpInfo($uid, $api_version = '1.0')
+    public function deleteWebhookByIdWithHttpInfo($uid)
     {
         $returnType = '';
-        $request = $this->deleteWebhookByIdRequest($uid, $api_version);
+        $request = $this->deleteWebhookByIdRequest($uid);
 
         try {
             $options = $this->createHttpClientOption();
@@ -450,7 +451,7 @@ class WebhookApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -458,7 +459,7 @@ class WebhookApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -466,7 +467,7 @@ class WebhookApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -482,14 +483,13 @@ class WebhookApi
      * Delete a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to be deleted. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteWebhookByIdAsync($uid, $api_version = '1.0')
+    public function deleteWebhookByIdAsync($uid)
     {
-        return $this->deleteWebhookByIdAsyncWithHttpInfo($uid, $api_version)
+        return $this->deleteWebhookByIdAsyncWithHttpInfo($uid)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -503,15 +503,14 @@ class WebhookApi
      * Delete a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to be deleted. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteWebhookByIdAsyncWithHttpInfo($uid, $api_version = '1.0')
+    public function deleteWebhookByIdAsyncWithHttpInfo($uid)
     {
         $returnType = '';
-        $request = $this->deleteWebhookByIdRequest($uid, $api_version);
+        $request = $this->deleteWebhookByIdRequest($uid);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -540,13 +539,20 @@ class WebhookApi
      * Create request for operation 'deleteWebhookById'
      *
      * @param  string $uid Alphanumeric ID of the webhook to be deleted. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteWebhookByIdRequest($uid, $api_version = '1.0')
+    protected function deleteWebhookByIdRequest($uid)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling deleteWebhookById'
+            );
+        }
         // verify the required parameter 'uid' is set
         if ($uid === null || (is_array($uid) && count($uid) === 0)) {
             throw new \InvalidArgumentException(
@@ -648,17 +654,16 @@ class WebhookApi
      *
      * Get a list of your webhooks
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2003
+     * @return \Karix\Model\WebhookListResponse
      */
-    public function getWebhook($api_version = '1.0', $offset = '0', $limit = '10')
+    public function getWebhook($offset = '0', $limit = '10')
     {
-        list($response) = $this->getWebhookWithHttpInfo($api_version, $offset, $limit);
+        list($response) = $this->getWebhookWithHttpInfo($offset, $limit);
         return $response;
     }
 
@@ -667,18 +672,17 @@ class WebhookApi
      *
      * Get a list of your webhooks
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\WebhookListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWebhookWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10')
+    public function getWebhookWithHttpInfo($offset = '0', $limit = '10')
     {
-        $returnType = '\Karix\Model\InlineResponse2003';
-        $request = $this->getWebhookRequest($api_version, $offset, $limit);
+        $returnType = '\Karix\Model\WebhookListResponse';
+        $request = $this->getWebhookRequest($offset, $limit);
 
         try {
             $options = $this->createHttpClientOption();
@@ -729,7 +733,7 @@ class WebhookApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2003',
+                        '\Karix\Model\WebhookListResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -737,7 +741,7 @@ class WebhookApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -745,7 +749,7 @@ class WebhookApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -760,16 +764,15 @@ class WebhookApi
      *
      * Get a list of your webhooks
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getWebhookAsync($api_version = '1.0', $offset = '0', $limit = '10')
+    public function getWebhookAsync($offset = '0', $limit = '10')
     {
-        return $this->getWebhookAsyncWithHttpInfo($api_version, $offset, $limit)
+        return $this->getWebhookAsyncWithHttpInfo($offset, $limit)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -782,17 +785,16 @@ class WebhookApi
      *
      * Get a list of your webhooks
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getWebhookAsyncWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10')
+    public function getWebhookAsyncWithHttpInfo($offset = '0', $limit = '10')
     {
-        $returnType = '\Karix\Model\InlineResponse2003';
-        $request = $this->getWebhookRequest($api_version, $offset, $limit);
+        $returnType = '\Karix\Model\WebhookListResponse';
+        $request = $this->getWebhookRequest($offset, $limit);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -834,15 +836,22 @@ class WebhookApi
     /**
      * Create request for operation 'getWebhook'
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getWebhookRequest($api_version = '1.0', $offset = '0', $limit = '10')
+    protected function getWebhookRequest($offset = '0', $limit = '10')
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling getWebhook'
+            );
+        }
 
         $resourcePath = '/webhook/';
         $formParams = [];
@@ -939,15 +948,14 @@ class WebhookApi
      * Get a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to get. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2011
+     * @return \Karix\Model\WebhookResponse
      */
-    public function getWebhookById($uid, $api_version = '1.0')
+    public function getWebhookById($uid)
     {
-        list($response) = $this->getWebhookByIdWithHttpInfo($uid, $api_version);
+        list($response) = $this->getWebhookByIdWithHttpInfo($uid);
         return $response;
     }
 
@@ -957,16 +965,15 @@ class WebhookApi
      * Get a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to get. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\WebhookResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWebhookByIdWithHttpInfo($uid, $api_version = '1.0')
+    public function getWebhookByIdWithHttpInfo($uid)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->getWebhookByIdRequest($uid, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->getWebhookByIdRequest($uid);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1017,7 +1024,7 @@ class WebhookApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2011',
+                        '\Karix\Model\WebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1025,7 +1032,7 @@ class WebhookApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1033,7 +1040,7 @@ class WebhookApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1041,7 +1048,7 @@ class WebhookApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1057,14 +1064,13 @@ class WebhookApi
      * Get a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to get. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getWebhookByIdAsync($uid, $api_version = '1.0')
+    public function getWebhookByIdAsync($uid)
     {
-        return $this->getWebhookByIdAsyncWithHttpInfo($uid, $api_version)
+        return $this->getWebhookByIdAsyncWithHttpInfo($uid)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1078,15 +1084,14 @@ class WebhookApi
      * Get a webhook by ID
      *
      * @param  string $uid Alphanumeric ID of the webhook to get. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getWebhookByIdAsyncWithHttpInfo($uid, $api_version = '1.0')
+    public function getWebhookByIdAsyncWithHttpInfo($uid)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->getWebhookByIdRequest($uid, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->getWebhookByIdRequest($uid);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1129,13 +1134,20 @@ class WebhookApi
      * Create request for operation 'getWebhookById'
      *
      * @param  string $uid Alphanumeric ID of the webhook to get. (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getWebhookByIdRequest($uid, $api_version = '1.0')
+    protected function getWebhookByIdRequest($uid)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling getWebhookById'
+            );
+        }
         // verify the required parameter 'uid' is set
         if ($uid === null || (is_array($uid) && count($uid) === 0)) {
             throw new \InvalidArgumentException(
@@ -1239,15 +1251,14 @@ class WebhookApi
      *
      * @param  string $uid Alphanumeric ID of the webhook to edit. (required)
      * @param  \Karix\Model\EditWebhook $webhook Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2011
+     * @return \Karix\Model\WebhookResponse
      */
-    public function patchWebhook($uid, $webhook, $api_version = '1.0')
+    public function patchWebhook($uid, $webhook)
     {
-        list($response) = $this->patchWebhookWithHttpInfo($uid, $webhook, $api_version);
+        list($response) = $this->patchWebhookWithHttpInfo($uid, $webhook);
         return $response;
     }
 
@@ -1258,16 +1269,15 @@ class WebhookApi
      *
      * @param  string $uid Alphanumeric ID of the webhook to edit. (required)
      * @param  \Karix\Model\EditWebhook $webhook Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\WebhookResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchWebhookWithHttpInfo($uid, $webhook, $api_version = '1.0')
+    public function patchWebhookWithHttpInfo($uid, $webhook)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->patchWebhookRequest($uid, $webhook, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->patchWebhookRequest($uid, $webhook);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1318,7 +1328,7 @@ class WebhookApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2011',
+                        '\Karix\Model\WebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1326,7 +1336,7 @@ class WebhookApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1334,7 +1344,7 @@ class WebhookApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1342,7 +1352,7 @@ class WebhookApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1350,7 +1360,7 @@ class WebhookApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1367,14 +1377,13 @@ class WebhookApi
      *
      * @param  string $uid Alphanumeric ID of the webhook to edit. (required)
      * @param  \Karix\Model\EditWebhook $webhook Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchWebhookAsync($uid, $webhook, $api_version = '1.0')
+    public function patchWebhookAsync($uid, $webhook)
     {
-        return $this->patchWebhookAsyncWithHttpInfo($uid, $webhook, $api_version)
+        return $this->patchWebhookAsyncWithHttpInfo($uid, $webhook)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1389,15 +1398,14 @@ class WebhookApi
      *
      * @param  string $uid Alphanumeric ID of the webhook to edit. (required)
      * @param  \Karix\Model\EditWebhook $webhook Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchWebhookAsyncWithHttpInfo($uid, $webhook, $api_version = '1.0')
+    public function patchWebhookAsyncWithHttpInfo($uid, $webhook)
     {
-        $returnType = '\Karix\Model\InlineResponse2011';
-        $request = $this->patchWebhookRequest($uid, $webhook, $api_version);
+        $returnType = '\Karix\Model\WebhookResponse';
+        $request = $this->patchWebhookRequest($uid, $webhook);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1441,13 +1449,20 @@ class WebhookApi
      *
      * @param  string $uid Alphanumeric ID of the webhook to edit. (required)
      * @param  \Karix\Model\EditWebhook $webhook Webhook object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function patchWebhookRequest($uid, $webhook, $api_version = '1.0')
+    protected function patchWebhookRequest($uid, $webhook)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling patchWebhook'
+            );
+        }
         // verify the required parameter 'uid' is set
         if ($uid === null || (is_array($uid) && count($uid) === 0)) {
             throw new \InvalidArgumentException(

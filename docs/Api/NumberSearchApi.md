@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **numbersearchGet**
-> \Karix\Model\InlineResponse2006 numbersearchGet($api_version, $offset, $limit, $country, $prefix, $contains, $number_type)
+> \Karix\Model\PhoneNumberListResponse numbersearchGet($offset, $limit, $country, $prefix, $contains, $number_type)
 
 Query for phone numbers in our inventory.
 
@@ -31,7 +31,6 @@ $apiInstance = new Karix\Api\NumberSearchApi(
     new GuzzleHttp\Client(),
     $config
 );
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 $offset = 0; // int | The number of items to skip before starting to collect the result set.
 $limit = 10; // int | The numbers of items to return.
 $country = "US"; // string | Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default.
@@ -40,7 +39,7 @@ $contains = "contains_example"; // string | Filter by numbers which contain this
 $number_type = array("number_type_example"); // string[] | Filter by number type: fixed, mobile, tollfree
 
 try {
-    $result = $apiInstance->numbersearchGet($api_version, $offset, $limit, $country, $prefix, $contains, $number_type);
+    $result = $apiInstance->numbersearchGet($offset, $limit, $country, $prefix, $contains, $number_type);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NumberSearchApi->numbersearchGet: ', $e->getMessage(), PHP_EOL;
@@ -52,7 +51,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
  **offset** | **int**| The number of items to skip before starting to collect the result set. | [optional] [default to 0]
  **limit** | **int**| The numbers of items to return. | [optional] [default to 10]
  **country** | **string**| Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. | [optional] [default to US]
@@ -62,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2006**](../Model/InlineResponse2006.md)
+[**\Karix\Model\PhoneNumberListResponse**](../Model/PhoneNumberListResponse.md)
 
 ### Authorization
 

@@ -92,7 +92,6 @@ class NumberApi
      *
      * Get details of all phone numbers linked to your account.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO (optional)
@@ -101,11 +100,11 @@ class NumberApi
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2004
+     * @return \Karix\Model\AccountNumberListResponse
      */
-    public function getNumber($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
+    public function getNumber($offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        list($response) = $this->getNumberWithHttpInfo($api_version, $offset, $limit, $country, $contains, $number_type);
+        list($response) = $this->getNumberWithHttpInfo($offset, $limit, $country, $contains, $number_type);
         return $response;
     }
 
@@ -114,7 +113,6 @@ class NumberApi
      *
      * Get details of all phone numbers linked to your account.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO (optional)
@@ -123,12 +121,12 @@ class NumberApi
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\AccountNumberListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getNumberWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
+    public function getNumberWithHttpInfo($offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Karix\Model\InlineResponse2004';
-        $request = $this->getNumberRequest($api_version, $offset, $limit, $country, $contains, $number_type);
+        $returnType = '\Karix\Model\AccountNumberListResponse';
+        $request = $this->getNumberRequest($offset, $limit, $country, $contains, $number_type);
 
         try {
             $options = $this->createHttpClientOption();
@@ -179,7 +177,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2004',
+                        '\Karix\Model\AccountNumberListResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -187,7 +185,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -195,7 +193,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -210,7 +208,6 @@ class NumberApi
      *
      * Get details of all phone numbers linked to your account.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO (optional)
@@ -220,9 +217,9 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getNumberAsync($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
+    public function getNumberAsync($offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        return $this->getNumberAsyncWithHttpInfo($api_version, $offset, $limit, $country, $contains, $number_type)
+        return $this->getNumberAsyncWithHttpInfo($offset, $limit, $country, $contains, $number_type)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -235,7 +232,6 @@ class NumberApi
      *
      * Get details of all phone numbers linked to your account.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO (optional)
@@ -245,10 +241,10 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getNumberAsyncWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
+    public function getNumberAsyncWithHttpInfo($offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Karix\Model\InlineResponse2004';
-        $request = $this->getNumberRequest($api_version, $offset, $limit, $country, $contains, $number_type);
+        $returnType = '\Karix\Model\AccountNumberListResponse';
+        $request = $this->getNumberRequest($offset, $limit, $country, $contains, $number_type);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -290,7 +286,6 @@ class NumberApi
     /**
      * Create request for operation 'getNumber'
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO (optional)
@@ -300,8 +295,16 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getNumberRequest($api_version = '1.0', $offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
+    protected function getNumberRequest($offset = '0', $limit = '10', $country = null, $contains = null, $number_type = null)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling getNumber'
+            );
+        }
 
         $resourcePath = '/number/';
         $formParams = [];
@@ -413,15 +416,14 @@ class NumberApi
      * Unrent number from your account
      *
      * @param  int $num Number which needs to be unrented (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function numberNumDelete($num, $api_version = '1.0')
+    public function numberNumDelete($num)
     {
-        $this->numberNumDeleteWithHttpInfo($num, $api_version);
+        $this->numberNumDeleteWithHttpInfo($num);
     }
 
     /**
@@ -430,16 +432,15 @@ class NumberApi
      * Unrent number from your account
      *
      * @param  int $num Number which needs to be unrented (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumDeleteWithHttpInfo($num, $api_version = '1.0')
+    public function numberNumDeleteWithHttpInfo($num)
     {
         $returnType = '';
-        $request = $this->numberNumDeleteRequest($num, $api_version);
+        $request = $this->numberNumDeleteRequest($num);
 
         try {
             $options = $this->createHttpClientOption();
@@ -476,7 +477,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -484,7 +485,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -492,7 +493,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -508,14 +509,13 @@ class NumberApi
      * Unrent number from your account
      *
      * @param  int $num Number which needs to be unrented (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumDeleteAsync($num, $api_version = '1.0')
+    public function numberNumDeleteAsync($num)
     {
-        return $this->numberNumDeleteAsyncWithHttpInfo($num, $api_version)
+        return $this->numberNumDeleteAsyncWithHttpInfo($num)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -529,15 +529,14 @@ class NumberApi
      * Unrent number from your account
      *
      * @param  int $num Number which needs to be unrented (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumDeleteAsyncWithHttpInfo($num, $api_version = '1.0')
+    public function numberNumDeleteAsyncWithHttpInfo($num)
     {
         $returnType = '';
-        $request = $this->numberNumDeleteRequest($num, $api_version);
+        $request = $this->numberNumDeleteRequest($num);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -566,13 +565,20 @@ class NumberApi
      * Create request for operation 'numberNumDelete'
      *
      * @param  int $num Number which needs to be unrented (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumDeleteRequest($num, $api_version = '1.0')
+    protected function numberNumDeleteRequest($num)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling numberNumDelete'
+            );
+        }
         // verify the required parameter 'num' is set
         if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
@@ -675,15 +681,14 @@ class NumberApi
      * Get details of a number
      *
      * @param  int $num Number for which details need to be fetched (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2005
+     * @return \Karix\Model\AccountNumberResponse
      */
-    public function numberNumGet($num, $api_version = '1.0')
+    public function numberNumGet($num)
     {
-        list($response) = $this->numberNumGetWithHttpInfo($num, $api_version);
+        list($response) = $this->numberNumGetWithHttpInfo($num);
         return $response;
     }
 
@@ -693,16 +698,15 @@ class NumberApi
      * Get details of a number
      *
      * @param  int $num Number for which details need to be fetched (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\AccountNumberResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumGetWithHttpInfo($num, $api_version = '1.0')
+    public function numberNumGetWithHttpInfo($num)
     {
-        $returnType = '\Karix\Model\InlineResponse2005';
-        $request = $this->numberNumGetRequest($num, $api_version);
+        $returnType = '\Karix\Model\AccountNumberResponse';
+        $request = $this->numberNumGetRequest($num);
 
         try {
             $options = $this->createHttpClientOption();
@@ -753,7 +757,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2005',
+                        '\Karix\Model\AccountNumberResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -761,7 +765,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -769,7 +773,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -777,7 +781,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -793,14 +797,13 @@ class NumberApi
      * Get details of a number
      *
      * @param  int $num Number for which details need to be fetched (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumGetAsync($num, $api_version = '1.0')
+    public function numberNumGetAsync($num)
     {
-        return $this->numberNumGetAsyncWithHttpInfo($num, $api_version)
+        return $this->numberNumGetAsyncWithHttpInfo($num)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -814,15 +817,14 @@ class NumberApi
      * Get details of a number
      *
      * @param  int $num Number for which details need to be fetched (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumGetAsyncWithHttpInfo($num, $api_version = '1.0')
+    public function numberNumGetAsyncWithHttpInfo($num)
     {
-        $returnType = '\Karix\Model\InlineResponse2005';
-        $request = $this->numberNumGetRequest($num, $api_version);
+        $returnType = '\Karix\Model\AccountNumberResponse';
+        $request = $this->numberNumGetRequest($num);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -865,13 +867,20 @@ class NumberApi
      * Create request for operation 'numberNumGet'
      *
      * @param  int $num Number for which details need to be fetched (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumGetRequest($num, $api_version = '1.0')
+    protected function numberNumGetRequest($num)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling numberNumGet'
+            );
+        }
         // verify the required parameter 'num' is set
         if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
@@ -975,15 +984,14 @@ class NumberApi
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2005
+     * @return \Karix\Model\AccountNumberResponse
      */
-    public function numberNumPatch($num, $number, $api_version = '1.0')
+    public function numberNumPatch($num, $number)
     {
-        list($response) = $this->numberNumPatchWithHttpInfo($num, $number, $api_version);
+        list($response) = $this->numberNumPatchWithHttpInfo($num, $number);
         return $response;
     }
 
@@ -994,16 +1002,15 @@ class NumberApi
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\AccountNumberResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumPatchWithHttpInfo($num, $number, $api_version = '1.0')
+    public function numberNumPatchWithHttpInfo($num, $number)
     {
-        $returnType = '\Karix\Model\InlineResponse2005';
-        $request = $this->numberNumPatchRequest($num, $number, $api_version);
+        $returnType = '\Karix\Model\AccountNumberResponse';
+        $request = $this->numberNumPatchRequest($num, $number);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1054,7 +1061,7 @@ class NumberApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2005',
+                        '\Karix\Model\AccountNumberResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1062,7 +1069,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1070,7 +1077,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1078,7 +1085,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1095,14 +1102,13 @@ class NumberApi
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsync($num, $number, $api_version = '1.0')
+    public function numberNumPatchAsync($num, $number)
     {
-        return $this->numberNumPatchAsyncWithHttpInfo($num, $number, $api_version)
+        return $this->numberNumPatchAsyncWithHttpInfo($num, $number)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1117,15 +1123,14 @@ class NumberApi
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsyncWithHttpInfo($num, $number, $api_version = '1.0')
+    public function numberNumPatchAsyncWithHttpInfo($num, $number)
     {
-        $returnType = '\Karix\Model\InlineResponse2005';
-        $request = $this->numberNumPatchRequest($num, $number, $api_version);
+        $returnType = '\Karix\Model\AccountNumberResponse';
+        $request = $this->numberNumPatchRequest($num, $number);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1169,13 +1174,20 @@ class NumberApi
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumPatchRequest($num, $number, $api_version = '1.0')
+    protected function numberNumPatchRequest($num, $number)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling numberNumPatch'
+            );
+        }
         // verify the required parameter 'num' is set
         if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
@@ -1287,15 +1299,14 @@ class NumberApi
      * Rent a phone number
      *
      * @param  \Karix\Model\RentNumber $number Rent Details object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2012
+     * @return \Karix\Model\NumberRentedResponse
      */
-    public function rentNumber($number, $api_version = '1.0')
+    public function rentNumber($number)
     {
-        list($response) = $this->rentNumberWithHttpInfo($number, $api_version);
+        list($response) = $this->rentNumberWithHttpInfo($number);
         return $response;
     }
 
@@ -1305,16 +1316,15 @@ class NumberApi
      * Rent a phone number
      *
      * @param  \Karix\Model\RentNumber $number Rent Details object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2012, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\NumberRentedResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function rentNumberWithHttpInfo($number, $api_version = '1.0')
+    public function rentNumberWithHttpInfo($number)
     {
-        $returnType = '\Karix\Model\InlineResponse2012';
-        $request = $this->rentNumberRequest($number, $api_version);
+        $returnType = '\Karix\Model\NumberRentedResponse';
+        $request = $this->rentNumberRequest($number);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1365,7 +1375,7 @@ class NumberApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2012',
+                        '\Karix\Model\NumberRentedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1373,7 +1383,7 @@ class NumberApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1381,7 +1391,7 @@ class NumberApi
                 case 402:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse402',
+                        '\Karix\Model\InsufficientBalanceResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1389,7 +1399,7 @@ class NumberApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1397,7 +1407,7 @@ class NumberApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse404',
+                        '\Karix\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1405,7 +1415,7 @@ class NumberApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1421,14 +1431,13 @@ class NumberApi
      * Rent a phone number
      *
      * @param  \Karix\Model\RentNumber $number Rent Details object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function rentNumberAsync($number, $api_version = '1.0')
+    public function rentNumberAsync($number)
     {
-        return $this->rentNumberAsyncWithHttpInfo($number, $api_version)
+        return $this->rentNumberAsyncWithHttpInfo($number)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1442,15 +1451,14 @@ class NumberApi
      * Rent a phone number
      *
      * @param  \Karix\Model\RentNumber $number Rent Details object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function rentNumberAsyncWithHttpInfo($number, $api_version = '1.0')
+    public function rentNumberAsyncWithHttpInfo($number)
     {
-        $returnType = '\Karix\Model\InlineResponse2012';
-        $request = $this->rentNumberRequest($number, $api_version);
+        $returnType = '\Karix\Model\NumberRentedResponse';
+        $request = $this->rentNumberRequest($number);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1493,13 +1501,20 @@ class NumberApi
      * Create request for operation 'rentNumber'
      *
      * @param  \Karix\Model\RentNumber $number Rent Details object (required)
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function rentNumberRequest($number, $api_version = '1.0')
+    protected function rentNumberRequest($number)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling rentNumber'
+            );
+        }
         // verify the required parameter 'number' is set
         if ($number === null || (is_array($number) && count($number) === 0)) {
             throw new \InvalidArgumentException(

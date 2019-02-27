@@ -62,8 +62,8 @@ class Account implements ModelInterface, ArrayAccess
         'uid' => 'string',
         'token' => 'string',
         'is_parent' => 'bool',
-        'created_time' => 'string',
-        'updated_time' => 'string',
+        'created_time' => '\DateTime',
+        'updated_time' => '\DateTime',
         'account_type' => 'string',
         'credit_balance' => 'BigDecimal',
         'auto_recharge' => 'bool'
@@ -80,8 +80,8 @@ class Account implements ModelInterface, ArrayAccess
         'uid' => null,
         'token' => null,
         'is_parent' => null,
-        'created_time' => null,
-        'updated_time' => null,
+        'created_time' => 'date-time',
+        'updated_time' => 'date-time',
         'account_type' => null,
         'credit_balance' => 'number',
         'auto_recharge' => null
@@ -448,7 +448,7 @@ class Account implements ModelInterface, ArrayAccess
     /**
      * Gets created_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCreatedTime()
     {
@@ -458,7 +458,7 @@ class Account implements ModelInterface, ArrayAccess
     /**
      * Sets created_time
      *
-     * @param string $created_time Date when this account was created
+     * @param \DateTime $created_time Date when this account was created
      *
      * @return $this
      */
@@ -472,7 +472,7 @@ class Account implements ModelInterface, ArrayAccess
     /**
      * Gets updated_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getUpdatedTime()
     {
@@ -482,7 +482,7 @@ class Account implements ModelInterface, ArrayAccess
     /**
      * Sets updated_time
      *
-     * @param string $updated_time Date when this account was last updated
+     * @param \DateTime $updated_time Date when this account was last updated
      *
      * @return $this
      */

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **createWebhook**
-> \Karix\Model\InlineResponse2011 createWebhook($webhook, $api_version)
+> \Karix\Model\WebhookResponse createWebhook($webhook)
 
 Create webhooks to receive Message
 
@@ -36,10 +36,9 @@ $apiInstance = new Karix\Api\WebhookApi(
     $config
 );
 $webhook = new \Karix\Model\CreateWebhook(); // \Karix\Model\CreateWebhook | Create Webhook object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->createWebhook($webhook, $api_version);
+    $result = $apiInstance->createWebhook($webhook);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->createWebhook: ', $e->getMessage(), PHP_EOL;
@@ -52,11 +51,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **webhook** | [**\Karix\Model\CreateWebhook**](../Model/CreateWebhook.md)| Create Webhook object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\WebhookResponse**](../Model/WebhookResponse.md)
 
 ### Authorization
 
@@ -70,7 +68,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **deleteWebhookById**
-> deleteWebhookById($uid, $api_version)
+> deleteWebhookById($uid)
 
 Delete a webhook by ID
 
@@ -94,10 +92,9 @@ $apiInstance = new Karix\Api\WebhookApi(
     $config
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the webhook to be deleted.
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $apiInstance->deleteWebhookById($uid, $api_version);
+    $apiInstance->deleteWebhookById($uid);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->deleteWebhookById: ', $e->getMessage(), PHP_EOL;
 }
@@ -109,7 +106,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the webhook to be deleted. |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
@@ -127,7 +123,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getWebhook**
-> \Karix\Model\InlineResponse2003 getWebhook($api_version, $offset, $limit)
+> \Karix\Model\WebhookListResponse getWebhook($offset, $limit)
 
 Get a list of your webhooks
 
@@ -150,12 +146,11 @@ $apiInstance = new Karix\Api\WebhookApi(
     new GuzzleHttp\Client(),
     $config
 );
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 $offset = 0; // int | The number of items to skip before starting to collect the result set.
 $limit = 10; // int | The numbers of items to return.
 
 try {
-    $result = $apiInstance->getWebhook($api_version, $offset, $limit);
+    $result = $apiInstance->getWebhook($offset, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->getWebhook: ', $e->getMessage(), PHP_EOL;
@@ -167,13 +162,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
  **offset** | **int**| The number of items to skip before starting to collect the result set. | [optional] [default to 0]
  **limit** | **int**| The numbers of items to return. | [optional] [default to 10]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2003**](../Model/InlineResponse2003.md)
+[**\Karix\Model\WebhookListResponse**](../Model/WebhookListResponse.md)
 
 ### Authorization
 
@@ -187,7 +181,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getWebhookById**
-> \Karix\Model\InlineResponse2011 getWebhookById($uid, $api_version)
+> \Karix\Model\WebhookResponse getWebhookById($uid)
 
 Get a webhook by ID
 
@@ -211,10 +205,9 @@ $apiInstance = new Karix\Api\WebhookApi(
     $config
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the webhook to get.
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->getWebhookById($uid, $api_version);
+    $result = $apiInstance->getWebhookById($uid);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->getWebhookById: ', $e->getMessage(), PHP_EOL;
@@ -227,11 +220,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the webhook to get. |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\WebhookResponse**](../Model/WebhookResponse.md)
 
 ### Authorization
 
@@ -245,7 +237,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **patchWebhook**
-> \Karix\Model\InlineResponse2011 patchWebhook($uid, $webhook, $api_version)
+> \Karix\Model\WebhookResponse patchWebhook($uid, $webhook)
 
 Edit a webhook
 
@@ -270,10 +262,9 @@ $apiInstance = new Karix\Api\WebhookApi(
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the webhook to edit.
 $webhook = new \Karix\Model\EditWebhook(); // \Karix\Model\EditWebhook | Webhook object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->patchWebhook($uid, $webhook, $api_version);
+    $result = $apiInstance->patchWebhook($uid, $webhook);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhookApi->patchWebhook: ', $e->getMessage(), PHP_EOL;
@@ -287,11 +278,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the webhook to edit. |
  **webhook** | [**\Karix\Model\EditWebhook**](../Model/EditWebhook.md)| Webhook object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse2011**](../Model/InlineResponse2011.md)
+[**\Karix\Model\WebhookResponse**](../Model/WebhookResponse.md)
 
 ### Authorization
 

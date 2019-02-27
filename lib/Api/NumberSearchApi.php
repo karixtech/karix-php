@@ -92,7 +92,6 @@ class NumberSearchApi
      *
      * Query for phone numbers in our inventory.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. (optional, default to US)
@@ -102,11 +101,11 @@ class NumberSearchApi
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Karix\Model\InlineResponse2006
+     * @return \Karix\Model\PhoneNumberListResponse
      */
-    public function numbersearchGet($api_version = '1.0', $offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function numbersearchGet($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        list($response) = $this->numbersearchGetWithHttpInfo($api_version, $offset, $limit, $country, $prefix, $contains, $number_type);
+        list($response) = $this->numbersearchGetWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type);
         return $response;
     }
 
@@ -115,7 +114,6 @@ class NumberSearchApi
      *
      * Query for phone numbers in our inventory.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. (optional, default to US)
@@ -125,12 +123,12 @@ class NumberSearchApi
      *
      * @throws \Karix\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Karix\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Karix\Model\PhoneNumberListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numbersearchGetWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function numbersearchGetWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Karix\Model\InlineResponse2006';
-        $request = $this->numbersearchGetRequest($api_version, $offset, $limit, $country, $prefix, $contains, $number_type);
+        $returnType = '\Karix\Model\PhoneNumberListResponse';
+        $request = $this->numbersearchGetRequest($offset, $limit, $country, $prefix, $contains, $number_type);
 
         try {
             $options = $this->createHttpClientOption();
@@ -181,7 +179,7 @@ class NumberSearchApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse2006',
+                        '\Karix\Model\PhoneNumberListResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -189,7 +187,7 @@ class NumberSearchApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse403',
+                        '\Karix\Model\UnauthorizedResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -197,7 +195,7 @@ class NumberSearchApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Karix\Model\InlineResponse500',
+                        '\Karix\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -212,7 +210,6 @@ class NumberSearchApi
      *
      * Query for phone numbers in our inventory.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. (optional, default to US)
@@ -223,9 +220,9 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numbersearchGetAsync($api_version = '1.0', $offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function numbersearchGetAsync($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        return $this->numbersearchGetAsyncWithHttpInfo($api_version, $offset, $limit, $country, $prefix, $contains, $number_type)
+        return $this->numbersearchGetAsyncWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -238,7 +235,6 @@ class NumberSearchApi
      *
      * Query for phone numbers in our inventory.
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. (optional, default to US)
@@ -249,10 +245,10 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numbersearchGetAsyncWithHttpInfo($api_version = '1.0', $offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function numbersearchGetAsyncWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        $returnType = '\Karix\Model\InlineResponse2006';
-        $request = $this->numbersearchGetRequest($api_version, $offset, $limit, $country, $prefix, $contains, $number_type);
+        $returnType = '\Karix\Model\PhoneNumberListResponse';
+        $request = $this->numbersearchGetRequest($offset, $limit, $country, $prefix, $contains, $number_type);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -294,7 +290,6 @@ class NumberSearchApi
     /**
      * Create request for operation 'numbersearchGet'
      *
-     * @param  string $api_version API Version. If not specified your pinned verison is used. (optional, default to 1.0)
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
      * @param  string $country Filter by country ISO. Only one country can be filtered at a time. If no country filter is provided then results for United States are returned by default. (optional, default to US)
@@ -305,8 +300,16 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numbersearchGetRequest($api_version = '1.0', $offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    protected function numbersearchGetRequest($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling numbersearchGet'
+            );
+        }
 
         $resourcePath = '/numbersearch/';
         $formParams = [];

@@ -63,8 +63,8 @@ class Webhook implements ModelInterface, ArrayAccess
         'sms_notification_fallback_method' => 'string',
         'name' => 'string',
         'uid' => 'string',
-        'created_time' => 'string',
-        'updated_time' => 'string',
+        'created_time' => '\DateTime',
+        'updated_time' => '\DateTime',
         'account_uid' => 'string'
     ];
 
@@ -80,8 +80,8 @@ class Webhook implements ModelInterface, ArrayAccess
         'sms_notification_fallback_method' => null,
         'name' => null,
         'uid' => null,
-        'created_time' => null,
-        'updated_time' => null,
+        'created_time' => 'date-time',
+        'updated_time' => 'date-time',
         'account_uid' => null
     ];
 
@@ -399,7 +399,7 @@ class Webhook implements ModelInterface, ArrayAccess
     /**
      * Gets created_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCreatedTime()
     {
@@ -409,7 +409,7 @@ class Webhook implements ModelInterface, ArrayAccess
     /**
      * Sets created_time
      *
-     * @param string $created_time Date when this webhook was created
+     * @param \DateTime $created_time Date when this webhook was created
      *
      * @return $this
      */
@@ -423,7 +423,7 @@ class Webhook implements ModelInterface, ArrayAccess
     /**
      * Gets updated_time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getUpdatedTime()
     {
@@ -433,7 +433,7 @@ class Webhook implements ModelInterface, ArrayAccess
     /**
      * Sets updated_time
      *
-     * @param string $updated_time Date when this webhook was last updated
+     * @param \DateTime $updated_time Date when this webhook was last updated
      *
      * @return $this
      */

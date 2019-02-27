@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **createSubaccount**
-> \Karix\Model\InlineResponse201 createSubaccount($subaccount, $api_version)
+> \Karix\Model\AccountResponse createSubaccount($subaccount)
 
 Create a new subaccount
 
@@ -35,10 +35,9 @@ $apiInstance = new Karix\Api\AccountsApi(
     $config
 );
 $subaccount = new \Karix\Model\CreateAccount(); // \Karix\Model\CreateAccount | Subaccount object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->createSubaccount($subaccount, $api_version);
+    $result = $apiInstance->createSubaccount($subaccount);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountsApi->createSubaccount: ', $e->getMessage(), PHP_EOL;
@@ -51,11 +50,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **subaccount** | [**\Karix\Model\CreateAccount**](../Model/CreateAccount.md)| Subaccount object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Karix\Model\AccountResponse**](../Model/AccountResponse.md)
 
 ### Authorization
 
@@ -69,7 +67,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getSubaccount**
-> \Karix\Model\InlineResponse200 getSubaccount($api_version, $offset, $limit)
+> \Karix\Model\AccountListResponse getSubaccount($offset, $limit)
 
 Get a list of accounts
 
@@ -92,12 +90,11 @@ $apiInstance = new Karix\Api\AccountsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 $offset = 0; // int | The number of items to skip before starting to collect the result set.
 $limit = 10; // int | The numbers of items to return.
 
 try {
-    $result = $apiInstance->getSubaccount($api_version, $offset, $limit);
+    $result = $apiInstance->getSubaccount($offset, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountsApi->getSubaccount: ', $e->getMessage(), PHP_EOL;
@@ -109,13 +106,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
  **offset** | **int**| The number of items to skip before starting to collect the result set. | [optional] [default to 0]
  **limit** | **int**| The numbers of items to return. | [optional] [default to 10]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse200**](../Model/InlineResponse200.md)
+[**\Karix\Model\AccountListResponse**](../Model/AccountListResponse.md)
 
 ### Authorization
 
@@ -129,7 +125,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getSubaccountById**
-> \Karix\Model\InlineResponse201 getSubaccountById($uid, $api_version)
+> \Karix\Model\AccountResponse getSubaccountById($uid)
 
 Get details of an account
 
@@ -153,10 +149,9 @@ $apiInstance = new Karix\Api\AccountsApi(
     $config
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the subaccount to get.
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->getSubaccountById($uid, $api_version);
+    $result = $apiInstance->getSubaccountById($uid);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountsApi->getSubaccountById: ', $e->getMessage(), PHP_EOL;
@@ -169,11 +164,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the subaccount to get. |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Karix\Model\AccountResponse**](../Model/AccountResponse.md)
 
 ### Authorization
 
@@ -187,7 +181,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **patchSubaccount**
-> \Karix\Model\InlineResponse201 patchSubaccount($uid, $subaccount, $api_version)
+> \Karix\Model\AccountResponse patchSubaccount($uid, $subaccount)
 
 Edit an account
 
@@ -212,10 +206,9 @@ $apiInstance = new Karix\Api\AccountsApi(
 );
 $uid = "uid_example"; // string | Alphanumeric ID of the account/subaccount to edit.
 $subaccount = new \Karix\Model\EditAccount(); // \Karix\Model\EditAccount | Subaccount object
-$api_version = "1.0"; // string | API Version. If not specified your pinned verison is used.
 
 try {
-    $result = $apiInstance->patchSubaccount($uid, $subaccount, $api_version);
+    $result = $apiInstance->patchSubaccount($uid, $subaccount);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AccountsApi->patchSubaccount: ', $e->getMessage(), PHP_EOL;
@@ -229,11 +222,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uid** | **string**| Alphanumeric ID of the account/subaccount to edit. |
  **subaccount** | [**\Karix\Model\EditAccount**](../Model/EditAccount.md)| Subaccount object |
- **api_version** | **string**| API Version. If not specified your pinned verison is used. | [optional] [default to 1.0]
 
 ### Return type
 
-[**\Karix\Model\InlineResponse201**](../Model/InlineResponse201.md)
+[**\Karix\Model\AccountResponse**](../Model/AccountResponse.md)
 
 ### Authorization
 
