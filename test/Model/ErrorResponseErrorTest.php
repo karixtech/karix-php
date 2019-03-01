@@ -81,6 +81,12 @@ class ErrorResponseErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessage()
     {
+        $error_response_error = new \Karix\Model\ErrorResponseError();
+        $message = "Unknown Error";
+        
+        $error_response_error->setMessage($message);
+        $this->assertEquals($message, $error_response_error->getMessage());
+
     }
 
     /**
@@ -88,5 +94,51 @@ class ErrorResponseErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyParam()
     {
+        $error_response_error = new \Karix\Model\ErrorResponseError();
+        $param = "example value";
+        
+        $error_response_error->setParam($param);
+        $this->assertEquals($param, $error_response_error->getParam());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message = "Unknown Error";
+        
+        $param = "example value";
+        
+        return array(
+            "message" => $message,
+            "param" => $param,
+        );
+    }
+
+    /**
+    * Test ErrorResponseError validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $error_response_error = new \Karix\Model\ErrorResponseError($example);
+        $this->assertTrue($error_response_error->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyMessage()
+    {
+        $example = $this->getGoodExample();
+        $example['message'] = null;
+        $error_response_error = new \Karix\Model\ErrorResponseError($example);
+        $this->assertFalse($error_response_error->valid());
+
+        $invalidProperties = $error_response_error->listInvalidProperties();
+        $this->assertContains("'message' can't be null", $invalidProperties);
+    }
+
 }

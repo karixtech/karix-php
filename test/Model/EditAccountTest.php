@@ -81,6 +81,22 @@ class EditAccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyName()
     {
+        $edit_account = new \Karix\Model\EditAccount();
+        $name = "Beth Smith";
+        
+        $edit_account->setName($name);
+        $this->assertEquals($name, $edit_account->getName());
+
+        // Check for validations
+        // Check for maxLength 200
+        $edit_account->setName(str_repeat("a", 200));
+        try
+        {
+            $edit_account->setName(str_repeat("a", 200)."a");
+            $this->fail("$edit_account->setName accepted input greater than 200");
+        }
+        catch(\InvalidArgumentException $e){}
+
     }
 
     /**
@@ -88,5 +104,83 @@ class EditAccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyStatus()
     {
+        $edit_account = new \Karix\Model\EditAccount();
+        $status = "enabled";
+        
+        $edit_account->setStatus($status);
+        $this->assertEquals($status, $edit_account->getStatus());
+
+        // Check for enum
+        $edit_account->setStatus("enabled");
+        $edit_account->setStatus("suspended");
+        $edit_account->setStatus("disabled");
+        try
+        {
+            $edit_account->setStatus("Invalid Edwfere");
+            $this->fail("$edit_account->setStatus accepted input outside of enum");
+        }
+        catch(\InvalidArgumentException $e){}
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $name = "Beth Smith";
+        
+        $status = "enabled";
+        
+        return array(
+            "name" => $name,
+            "status" => $status,
+        );
+    }
+
+    /**
+    * Test EditAccount validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $edit_account = new \Karix\Model\EditAccount($example);
+        $this->assertTrue($edit_account->valid());
+    }
+
+    /**
+    *
+    */
+    public function testMaxLengthPropertyName()
+    {
+        $example = $this->getGoodExample();
+
+        $example['name'] = str_repeat("a", 200)."a";
+
+        $edit_account = new \Karix\Model\EditAccount($example);
+        $this->assertFalse($edit_account->valid());
+
+        $invalidProperties = $edit_account->listInvalidProperties();
+        $this->assertContains("invalid value for 'name', the character length must be smaller than or equal to 200.", $invalidProperties);
+    }
+
+    /**
+    *
+    */
+    public function testEnumPropertyStatus()
+    {
+        $example = $this->getGoodExample();
+        $example['status'] = "Invalid Edwfere";
+        $edit_account = new \Karix\Model\EditAccount($example);
+        $this->assertFalse($edit_account->valid());
+
+        $allowedValues = $edit_account->getStatusAllowableValues();
+        $err_msg = sprintf(
+            "invalid value for 'status', must be one of '%s'",
+            implode("', '", $allowedValues)
+        );
+        $invalidProperties = $edit_account->listInvalidProperties();
+        $this->assertContains($err_msg, $invalidProperties);
+    }
+
 }

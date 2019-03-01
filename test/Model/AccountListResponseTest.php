@@ -81,6 +81,18 @@ class AccountListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $account_list_response = new \Karix\Model\AccountListResponse();
+        $account_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Account();
+        
+
+        $account_list_response_objects[] = $subobj;
+        $objects = $account_list_response_objects;
+        
+        $account_list_response->setObjects($objects);
+        $this->assertEquals($objects, $account_list_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class AccountListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $account_list_response = new \Karix\Model\AccountListResponse();
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $account_list_response->setMeta($meta);
+        $this->assertEquals($meta, $account_list_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $account_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Account();
+        
+
+        $account_list_response_objects[] = $subobj;
+        $objects = $account_list_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test AccountListResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $account_list_response = new \Karix\Model\AccountListResponse($example);
+        $this->assertTrue($account_list_response->valid());
+    }
+
 }

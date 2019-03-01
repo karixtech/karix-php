@@ -81,6 +81,12 @@ class EditAccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyWebhookUid()
     {
+        $edit_account_number = new \Karix\Model\EditAccountNumber();
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $edit_account_number->setWebhookUid($webhook_uid);
+        $this->assertEquals($webhook_uid, $edit_account_number->getWebhookUid());
+
     }
 
     /**
@@ -88,5 +94,37 @@ class EditAccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAlias()
     {
+        $edit_account_number = new \Karix\Model\EditAccountNumber();
+        $alias = "Number 1";
+        
+        $edit_account_number->setAlias($alias);
+        $this->assertEquals($alias, $edit_account_number->getAlias());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $alias = "Number 1";
+        
+        return array(
+            "webhook_uid" => $webhook_uid,
+            "alias" => $alias,
+        );
+    }
+
+    /**
+    * Test EditAccountNumber validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $edit_account_number = new \Karix\Model\EditAccountNumber($example);
+        $this->assertTrue($edit_account_number->valid());
+    }
+
 }

@@ -81,6 +81,12 @@ class RentNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyNumber()
     {
+        $rent_number = new \Karix\Model\RentNumber();
+        $number = "14154009186";
+        
+        $rent_number->setNumber($number);
+        $this->assertEquals($number, $rent_number->getNumber());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class RentNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyWebhookUid()
     {
+        $rent_number = new \Karix\Model\RentNumber();
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $rent_number->setWebhookUid($webhook_uid);
+        $this->assertEquals($webhook_uid, $rent_number->getWebhookUid());
+
     }
 
     /**
@@ -95,5 +107,54 @@ class RentNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAlias()
     {
+        $rent_number = new \Karix\Model\RentNumber();
+        $alias = "Number 1";
+        
+        $rent_number->setAlias($alias);
+        $this->assertEquals($alias, $rent_number->getAlias());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $number = "14154009186";
+        
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $alias = "Number 1";
+        
+        return array(
+            "number" => $number,
+            "webhook_uid" => $webhook_uid,
+            "alias" => $alias,
+        );
+    }
+
+    /**
+    * Test RentNumber validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $rent_number = new \Karix\Model\RentNumber($example);
+        $this->assertTrue($rent_number->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyNumber()
+    {
+        $example = $this->getGoodExample();
+        $example['number'] = null;
+        $rent_number = new \Karix\Model\RentNumber($example);
+        $this->assertFalse($rent_number->valid());
+
+        $invalidProperties = $rent_number->listInvalidProperties();
+        $this->assertContains("'number' can't be null", $invalidProperties);
+    }
+
 }

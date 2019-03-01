@@ -81,6 +81,17 @@ class ErrorResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $error_response = new \Karix\Model\ErrorResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $error_response->setMeta($meta);
+        $this->assertEquals($meta, $error_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class ErrorResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyError()
     {
+        $error_response = new \Karix\Model\ErrorResponse();
+        
+        
+        $subobj = new \Karix\Model\ErrorResponseError();
+        
+
+        $error = $subobj;
+        
+        $error_response->setError($error);
+        $this->assertEquals($error, $error_response->getError());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\ErrorResponseError();
+        
+
+        $error = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "error" => $error,
+        );
+    }
+
+    /**
+    * Test ErrorResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $error_response = new \Karix\Model\ErrorResponse($example);
+        $this->assertTrue($error_response->valid());
+    }
+
 }

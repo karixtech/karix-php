@@ -81,6 +81,12 @@ class ArrayMetaResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRequestUuid()
     {
+        $array_meta_response = new \Karix\Model\ArrayMetaResponse();
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        $array_meta_response->setRequestUuid($request_uuid);
+        $this->assertEquals($request_uuid, $array_meta_response->getRequestUuid());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class ArrayMetaResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyNext()
     {
+        $array_meta_response = new \Karix\Model\ArrayMetaResponse();
+        $next = "https://api.karix.io/<resource>/?limit=10&offset=10";
+        
+        $array_meta_response->setNext($next);
+        $this->assertEquals($next, $array_meta_response->getNext());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class ArrayMetaResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyPrevious()
     {
+        $array_meta_response = new \Karix\Model\ArrayMetaResponse();
+        $previous = "example value";
+        
+        $array_meta_response->setPrevious($previous);
+        $this->assertEquals($previous, $array_meta_response->getPrevious());
+
     }
 
     /**
@@ -102,5 +120,51 @@ class ArrayMetaResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyTotal()
     {
+        $array_meta_response = new \Karix\Model\ArrayMetaResponse();
+        
+        $subobj = 1;
+        
+
+        $total = $subobj;
+        
+        $array_meta_response->setTotal($total);
+        $this->assertEquals($total, $array_meta_response->getTotal());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        $next = "https://api.karix.io/<resource>/?limit=10&offset=10";
+        
+        $previous = "example value";
+        
+        
+        $subobj = 1;
+        
+
+        $total = $subobj;
+        
+        return array(
+            "request_uuid" => $request_uuid,
+            "next" => $next,
+            "previous" => $previous,
+            "total" => $total,
+        );
+    }
+
+    /**
+    * Test ArrayMetaResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $array_meta_response = new \Karix\Model\ArrayMetaResponse($example);
+        $this->assertTrue($array_meta_response->valid());
+    }
+
 }

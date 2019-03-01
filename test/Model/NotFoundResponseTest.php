@@ -81,6 +81,17 @@ class NotFoundResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $not_found_response = new \Karix\Model\NotFoundResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $not_found_response->setMeta($meta);
+        $this->assertEquals($meta, $not_found_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class NotFoundResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyError()
     {
+        $not_found_response = new \Karix\Model\NotFoundResponse();
+        
+        
+        $subobj = new \Karix\Model\NotFoundResponseError();
+        
+
+        $error = $subobj;
+        
+        $not_found_response->setError($error);
+        $this->assertEquals($error, $not_found_response->getError());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\NotFoundResponseError();
+        
+
+        $error = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "error" => $error,
+        );
+    }
+
+    /**
+    * Test NotFoundResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $not_found_response = new \Karix\Model\NotFoundResponse($example);
+        $this->assertTrue($not_found_response->valid());
+    }
+
 }

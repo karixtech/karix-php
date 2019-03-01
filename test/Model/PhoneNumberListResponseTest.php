@@ -81,6 +81,18 @@ class PhoneNumberListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $phone_number_list_response = new \Karix\Model\PhoneNumberListResponse();
+        $phone_number_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\PhoneNumber();
+        
+
+        $phone_number_list_response_objects[] = $subobj;
+        $objects = $phone_number_list_response_objects;
+        
+        $phone_number_list_response->setObjects($objects);
+        $this->assertEquals($objects, $phone_number_list_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class PhoneNumberListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $phone_number_list_response = new \Karix\Model\PhoneNumberListResponse();
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $phone_number_list_response->setMeta($meta);
+        $this->assertEquals($meta, $phone_number_list_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $phone_number_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\PhoneNumber();
+        
+
+        $phone_number_list_response_objects[] = $subobj;
+        $objects = $phone_number_list_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test PhoneNumberListResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $phone_number_list_response = new \Karix\Model\PhoneNumberListResponse($example);
+        $this->assertTrue($phone_number_list_response->valid());
+    }
+
 }

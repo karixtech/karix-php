@@ -72,6 +72,16 @@ class NumberApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for deleteNumber
+     *
+     * Unrent number from your account.
+     *
+     */
+    public function testDeleteNumber()
+    {
+    }
+
+    /**
      * Test case for getNumber
      *
      * Get details of all phone numbers linked to your account..
@@ -82,32 +92,22 @@ class NumberApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for numberNumDelete
-     *
-     * Unrent number from your account.
-     *
-     */
-    public function testNumberNumDelete()
-    {
-    }
-
-    /**
-     * Test case for numberNumGet
+     * Test case for getNumberDetails
      *
      * Get details of a number.
      *
      */
-    public function testNumberNumGet()
+    public function testGetNumberDetails()
     {
     }
 
     /**
-     * Test case for numberNumPatch
+     * Test case for patchNumberDetails
      *
      * Edit phone number belonging to your account.
      *
      */
-    public function testNumberNumPatch()
+    public function testPatchNumberDetails()
     {
     }
 

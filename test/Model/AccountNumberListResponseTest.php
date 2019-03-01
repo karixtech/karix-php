@@ -81,6 +81,18 @@ class AccountNumberListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $account_number_list_response = new \Karix\Model\AccountNumberListResponse();
+        $account_number_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $account_number_list_response_objects[] = $subobj;
+        $objects = $account_number_list_response_objects;
+        
+        $account_number_list_response->setObjects($objects);
+        $this->assertEquals($objects, $account_number_list_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class AccountNumberListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $account_number_list_response = new \Karix\Model\AccountNumberListResponse();
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $account_number_list_response->setMeta($meta);
+        $this->assertEquals($meta, $account_number_list_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $account_number_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $account_number_list_response_objects[] = $subobj;
+        $objects = $account_number_list_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test AccountNumberListResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $account_number_list_response = new \Karix\Model\AccountNumberListResponse($example);
+        $this->assertTrue($account_number_list_response->valid());
+    }
+
 }

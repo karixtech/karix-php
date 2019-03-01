@@ -81,6 +81,18 @@ class MessageCreatedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $message_created_response = new \Karix\Model\MessageCreatedResponse();
+        $message_created_response_objects = [];
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $message_created_response_objects[] = $subobj;
+        $objects = $message_created_response_objects;
+        
+        $message_created_response->setObjects($objects);
+        $this->assertEquals($objects, $message_created_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class MessageCreatedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $message_created_response = new \Karix\Model\MessageCreatedResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponseWithBalance();
+        
+
+        $meta = $subobj;
+        
+        $message_created_response->setMeta($meta);
+        $this->assertEquals($meta, $message_created_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message_created_response_objects = [];
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $message_created_response_objects[] = $subobj;
+        $objects = $message_created_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\MetaResponseWithBalance();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test MessageCreatedResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $message_created_response = new \Karix\Model\MessageCreatedResponse($example);
+        $this->assertTrue($message_created_response->valid());
+    }
+
 }

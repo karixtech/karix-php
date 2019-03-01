@@ -81,5 +81,34 @@ class PhoneNumberServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySms()
     {
+        $phone_number_service = new \Karix\Model\PhoneNumberService();
+        $sms = true;
+        
+        $phone_number_service->setSms($sms);
+        $this->assertEquals($sms, $phone_number_service->getSms());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $sms = true;
+        
+        return array(
+            "sms" => $sms,
+        );
+    }
+
+    /**
+    * Test PhoneNumberService validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $phone_number_service = new \Karix\Model\PhoneNumberService($example);
+        $this->assertTrue($phone_number_service->valid());
+    }
+
 }

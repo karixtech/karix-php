@@ -81,6 +81,12 @@ class MessageErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyCode()
     {
+        $message_error = new \Karix\Model\MessageError();
+        $code = "1000";
+        
+        $message_error->setCode($code);
+        $this->assertEquals($code, $message_error->getCode());
+
     }
 
     /**
@@ -88,5 +94,37 @@ class MessageErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessage()
     {
+        $message_error = new \Karix\Model\MessageError();
+        $message = "E.164 check failed for destination";
+        
+        $message_error->setMessage($message);
+        $this->assertEquals($message, $message_error->getMessage());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $code = "1000";
+        
+        $message = "E.164 check failed for destination";
+        
+        return array(
+            "code" => $code,
+            "message" => $message,
+        );
+    }
+
+    /**
+    * Test MessageError validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $message_error = new \Karix\Model\MessageError($example);
+        $this->assertTrue($message_error->valid());
+    }
+
 }

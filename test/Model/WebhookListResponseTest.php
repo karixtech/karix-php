@@ -81,6 +81,18 @@ class WebhookListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $webhook_list_response = new \Karix\Model\WebhookListResponse();
+        $webhook_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Webhook();
+        
+
+        $webhook_list_response_objects[] = $subobj;
+        $objects = $webhook_list_response_objects;
+        
+        $webhook_list_response->setObjects($objects);
+        $this->assertEquals($objects, $webhook_list_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class WebhookListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $webhook_list_response = new \Karix\Model\WebhookListResponse();
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $webhook_list_response->setMeta($meta);
+        $this->assertEquals($meta, $webhook_list_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $webhook_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Webhook();
+        
+
+        $webhook_list_response_objects[] = $subobj;
+        $objects = $webhook_list_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test WebhookListResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $webhook_list_response = new \Karix\Model\WebhookListResponse($example);
+        $this->assertTrue($webhook_list_response->valid());
+    }
+
 }

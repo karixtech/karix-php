@@ -81,6 +81,17 @@ class InsufficientBalanceResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $insufficient_balance_response = new \Karix\Model\InsufficientBalanceResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $insufficient_balance_response->setMeta($meta);
+        $this->assertEquals($meta, $insufficient_balance_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class InsufficientBalanceResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyError()
     {
+        $insufficient_balance_response = new \Karix\Model\InsufficientBalanceResponse();
+        
+        
+        $subobj = new \Karix\Model\InsufficientBalanceResponseError();
+        
+
+        $error = $subobj;
+        
+        $insufficient_balance_response->setError($error);
+        $this->assertEquals($error, $insufficient_balance_response->getError());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\InsufficientBalanceResponseError();
+        
+
+        $error = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "error" => $error,
+        );
+    }
+
+    /**
+    * Test InsufficientBalanceResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $insufficient_balance_response = new \Karix\Model\InsufficientBalanceResponse($example);
+        $this->assertTrue($insufficient_balance_response->valid());
+    }
+
 }

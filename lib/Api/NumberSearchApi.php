@@ -88,7 +88,7 @@ class NumberSearchApi
     }
 
     /**
-     * Operation numbersearchGet
+     * Operation searchNumber
      *
      * Query for phone numbers in our inventory.
      *
@@ -103,14 +103,14 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \Karix\Model\PhoneNumberListResponse
      */
-    public function numbersearchGet($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function searchNumber($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        list($response) = $this->numbersearchGetWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type);
+        list($response) = $this->searchNumberWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type);
         return $response;
     }
 
     /**
-     * Operation numbersearchGetWithHttpInfo
+     * Operation searchNumberWithHttpInfo
      *
      * Query for phone numbers in our inventory.
      *
@@ -125,10 +125,10 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return array of \Karix\Model\PhoneNumberListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numbersearchGetWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function searchNumberWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
         $returnType = '\Karix\Model\PhoneNumberListResponse';
-        $request = $this->numbersearchGetRequest($offset, $limit, $country, $prefix, $contains, $number_type);
+        $request = $this->searchNumberRequest($offset, $limit, $country, $prefix, $contains, $number_type);
 
         try {
             $options = $this->createHttpClientOption();
@@ -206,7 +206,7 @@ class NumberSearchApi
     }
 
     /**
-     * Operation numbersearchGetAsync
+     * Operation searchNumberAsync
      *
      * Query for phone numbers in our inventory.
      *
@@ -220,9 +220,9 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numbersearchGetAsync($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function searchNumberAsync($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
-        return $this->numbersearchGetAsyncWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type)
+        return $this->searchNumberAsyncWithHttpInfo($offset, $limit, $country, $prefix, $contains, $number_type)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -231,7 +231,7 @@ class NumberSearchApi
     }
 
     /**
-     * Operation numbersearchGetAsyncWithHttpInfo
+     * Operation searchNumberAsyncWithHttpInfo
      *
      * Query for phone numbers in our inventory.
      *
@@ -245,10 +245,10 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numbersearchGetAsyncWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    public function searchNumberAsyncWithHttpInfo($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
         $returnType = '\Karix\Model\PhoneNumberListResponse';
-        $request = $this->numbersearchGetRequest($offset, $limit, $country, $prefix, $contains, $number_type);
+        $request = $this->searchNumberRequest($offset, $limit, $country, $prefix, $contains, $number_type);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -288,7 +288,7 @@ class NumberSearchApi
     }
 
     /**
-     * Create request for operation 'numbersearchGet'
+     * Create request for operation 'searchNumber'
      *
      * @param  int $offset The number of items to skip before starting to collect the result set. (optional, default to 0)
      * @param  int $limit The numbers of items to return. (optional, default to 10)
@@ -300,14 +300,14 @@ class NumberSearchApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numbersearchGetRequest($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
+    protected function searchNumberRequest($offset = '0', $limit = '10', $country = 'US', $prefix = null, $contains = null, $number_type = null)
     {
         // set constants with only one allowable value
         $api_version = '1.0';
         // verify the required parameter 'api_version' is set
         if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_version when calling numbersearchGet'
+                'Missing the required parameter $api_version when calling searchNumber'
             );
         }
 

@@ -81,6 +81,18 @@ class MessageListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyObjects()
     {
+        $message_list_response = new \Karix\Model\MessageListResponse();
+        $message_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $message_list_response_objects[] = $subobj;
+        $objects = $message_list_response_objects;
+        
+        $message_list_response->setObjects($objects);
+        $this->assertEquals($objects, $message_list_response->getObjects());
+
     }
 
     /**
@@ -88,5 +100,53 @@ class MessageListResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $message_list_response = new \Karix\Model\MessageListResponse();
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $message_list_response->setMeta($meta);
+        $this->assertEquals($meta, $message_list_response->getMeta());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message_list_response_objects = [];
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $message_list_response_objects[] = $subobj;
+        $objects = $message_list_response_objects;
+        
+        
+        
+        $subobj = new \Karix\Model\ArrayMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        return array(
+            "objects" => $objects,
+            "meta" => $meta,
+        );
+    }
+
+    /**
+    * Test MessageListResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $message_list_response = new \Karix\Model\MessageListResponse($example);
+        $this->assertTrue($message_list_response->valid());
+    }
+
 }

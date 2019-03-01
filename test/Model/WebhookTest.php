@@ -81,6 +81,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationUrl()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $webhook->setSmsNotificationUrl($sms_notification_url);
+        $this->assertEquals($sms_notification_url, $webhook->getSmsNotificationUrl());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationMethod()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $sms_notification_method = "POST";
+        
+        $webhook->setSmsNotificationMethod($sms_notification_method);
+        $this->assertEquals($sms_notification_method, $webhook->getSmsNotificationMethod());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackUrl()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $webhook->setSmsNotificationFallbackUrl($sms_notification_fallback_url);
+        $this->assertEquals($sms_notification_fallback_url, $webhook->getSmsNotificationFallbackUrl());
+
     }
 
     /**
@@ -102,6 +120,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackMethod()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $sms_notification_fallback_method = "POST";
+        
+        $webhook->setSmsNotificationFallbackMethod($sms_notification_fallback_method);
+        $this->assertEquals($sms_notification_fallback_method, $webhook->getSmsNotificationFallbackMethod());
+
     }
 
     /**
@@ -109,6 +133,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyName()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $name = "webhook_1";
+        
+        $webhook->setName($name);
+        $this->assertEquals($name, $webhook->getName());
+
     }
 
     /**
@@ -116,6 +146,12 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyUid()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $uid = "3e4e654c-f4ad-430d-b41e-d71068ecf948";
+        
+        $webhook->setUid($uid);
+        $this->assertEquals($uid, $webhook->getUid());
+
     }
 
     /**
@@ -123,6 +159,13 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyCreatedTime()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $created_time = $datetime;
+        
+        $webhook->setCreatedTime($created_time);
+        $this->assertEquals($created_time, $webhook->getCreatedTime());
+
     }
 
     /**
@@ -130,6 +173,13 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyUpdatedTime()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-05T09:59:29.660Z');
+        $updated_time = $datetime;
+        
+        $webhook->setUpdatedTime($updated_time);
+        $this->assertEquals($updated_time, $webhook->getUpdatedTime());
+
     }
 
     /**
@@ -137,5 +187,60 @@ class WebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAccountUid()
     {
+        $webhook = new \Karix\Model\Webhook();
+        $account_uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        $webhook->setAccountUid($account_uid);
+        $this->assertEquals($account_uid, $webhook->getAccountUid());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $sms_notification_method = "POST";
+        
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $sms_notification_fallback_method = "POST";
+        
+        $name = "webhook_1";
+        
+        $uid = "3e4e654c-f4ad-430d-b41e-d71068ecf948";
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $created_time = $datetime;
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-05T09:59:29.660Z');
+        $updated_time = $datetime;
+        
+        $account_uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        return array(
+            "sms_notification_url" => $sms_notification_url,
+            "sms_notification_method" => $sms_notification_method,
+            "sms_notification_fallback_url" => $sms_notification_fallback_url,
+            "sms_notification_fallback_method" => $sms_notification_fallback_method,
+            "name" => $name,
+            "uid" => $uid,
+            "created_time" => $created_time,
+            "updated_time" => $updated_time,
+            "account_uid" => $account_uid,
+        );
+    }
+
+    /**
+    * Test Webhook validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $webhook = new \Karix\Model\Webhook($example);
+        $this->assertTrue($webhook->valid());
+    }
+
 }

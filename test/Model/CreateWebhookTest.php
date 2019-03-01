@@ -81,6 +81,12 @@ class CreateWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationUrl()
     {
+        $create_webhook = new \Karix\Model\CreateWebhook();
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $create_webhook->setSmsNotificationUrl($sms_notification_url);
+        $this->assertEquals($sms_notification_url, $create_webhook->getSmsNotificationUrl());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class CreateWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationMethod()
     {
+        $create_webhook = new \Karix\Model\CreateWebhook();
+        $sms_notification_method = "POST";
+        
+        $create_webhook->setSmsNotificationMethod($sms_notification_method);
+        $this->assertEquals($sms_notification_method, $create_webhook->getSmsNotificationMethod());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class CreateWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackUrl()
     {
+        $create_webhook = new \Karix\Model\CreateWebhook();
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $create_webhook->setSmsNotificationFallbackUrl($sms_notification_fallback_url);
+        $this->assertEquals($sms_notification_fallback_url, $create_webhook->getSmsNotificationFallbackUrl());
+
     }
 
     /**
@@ -102,6 +120,12 @@ class CreateWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackMethod()
     {
+        $create_webhook = new \Karix\Model\CreateWebhook();
+        $sms_notification_fallback_method = "POST";
+        
+        $create_webhook->setSmsNotificationFallbackMethod($sms_notification_fallback_method);
+        $this->assertEquals($sms_notification_fallback_method, $create_webhook->getSmsNotificationFallbackMethod());
+
     }
 
     /**
@@ -109,5 +133,88 @@ class CreateWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyName()
     {
+        $create_webhook = new \Karix\Model\CreateWebhook();
+        $name = "webhook_1";
+        
+        $create_webhook->setName($name);
+        $this->assertEquals($name, $create_webhook->getName());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $sms_notification_method = "POST";
+        
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $sms_notification_fallback_method = "POST";
+        
+        $name = "webhook_1";
+        
+        return array(
+            "sms_notification_url" => $sms_notification_url,
+            "sms_notification_method" => $sms_notification_method,
+            "sms_notification_fallback_url" => $sms_notification_fallback_url,
+            "sms_notification_fallback_method" => $sms_notification_fallback_method,
+            "name" => $name,
+        );
+    }
+
+    /**
+    * Test CreateWebhook validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $create_webhook = new \Karix\Model\CreateWebhook($example);
+        $this->assertTrue($create_webhook->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertySmsNotificationUrl()
+    {
+        $example = $this->getGoodExample();
+        $example['sms_notification_url'] = null;
+        $create_webhook = new \Karix\Model\CreateWebhook($example);
+        $this->assertFalse($create_webhook->valid());
+
+        $invalidProperties = $create_webhook->listInvalidProperties();
+        $this->assertContains("'sms_notification_url' can't be null", $invalidProperties);
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertySmsNotificationMethod()
+    {
+        $example = $this->getGoodExample();
+        $example['sms_notification_method'] = null;
+        $create_webhook = new \Karix\Model\CreateWebhook($example);
+        $this->assertFalse($create_webhook->valid());
+
+        $invalidProperties = $create_webhook->listInvalidProperties();
+        $this->assertContains("'sms_notification_method' can't be null", $invalidProperties);
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyName()
+    {
+        $example = $this->getGoodExample();
+        $example['name'] = null;
+        $create_webhook = new \Karix\Model\CreateWebhook($example);
+        $this->assertFalse($create_webhook->valid());
+
+        $invalidProperties = $create_webhook->listInvalidProperties();
+        $this->assertContains("'name' can't be null", $invalidProperties);
+    }
+
 }

@@ -81,6 +81,17 @@ class AccountNumberResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $account_number_response = new \Karix\Model\AccountNumberResponse();
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $account_number_response->setMeta($meta);
+        $this->assertEquals($meta, $account_number_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class AccountNumberResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyData()
     {
+        $account_number_response = new \Karix\Model\AccountNumberResponse();
+        
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $data = $subobj;
+        
+        $account_number_response->setData($data);
+        $this->assertEquals($data, $account_number_response->getData());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $data = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "data" => $data,
+        );
+    }
+
+    /**
+    * Test AccountNumberResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $account_number_response = new \Karix\Model\AccountNumberResponse($example);
+        $this->assertTrue($account_number_response->valid());
+    }
+
 }

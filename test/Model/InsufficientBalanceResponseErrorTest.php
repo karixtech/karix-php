@@ -81,5 +81,48 @@ class InsufficientBalanceResponseErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessage()
     {
+        $insufficient_balance_response_error = new \Karix\Model\InsufficientBalanceResponseError();
+        $message = "Insufficient Balance";
+        
+        $insufficient_balance_response_error->setMessage($message);
+        $this->assertEquals($message, $insufficient_balance_response_error->getMessage());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message = "Insufficient Balance";
+        
+        return array(
+            "message" => $message,
+        );
+    }
+
+    /**
+    * Test InsufficientBalanceResponseError validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $insufficient_balance_response_error = new \Karix\Model\InsufficientBalanceResponseError($example);
+        $this->assertTrue($insufficient_balance_response_error->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyMessage()
+    {
+        $example = $this->getGoodExample();
+        $example['message'] = null;
+        $insufficient_balance_response_error = new \Karix\Model\InsufficientBalanceResponseError($example);
+        $this->assertFalse($insufficient_balance_response_error->valid());
+
+        $invalidProperties = $insufficient_balance_response_error->listInvalidProperties();
+        $this->assertContains("'message' can't be null", $invalidProperties);
+    }
+
 }

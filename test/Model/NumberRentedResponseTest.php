@@ -81,6 +81,17 @@ class NumberRentedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $number_rented_response = new \Karix\Model\NumberRentedResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponseWithBalance();
+        
+
+        $meta = $subobj;
+        
+        $number_rented_response->setMeta($meta);
+        $this->assertEquals($meta, $number_rented_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class NumberRentedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyData()
     {
+        $number_rented_response = new \Karix\Model\NumberRentedResponse();
+        
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $data = $subobj;
+        
+        $number_rented_response->setData($data);
+        $this->assertEquals($data, $number_rented_response->getData());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\MetaResponseWithBalance();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\AccountNumber();
+        
+
+        $data = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "data" => $data,
+        );
+    }
+
+    /**
+    * Test NumberRentedResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $number_rented_response = new \Karix\Model\NumberRentedResponse($example);
+        $this->assertTrue($number_rented_response->valid());
+    }
+
 }

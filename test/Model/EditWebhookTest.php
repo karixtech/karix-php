@@ -81,6 +81,12 @@ class EditWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationUrl()
     {
+        $edit_webhook = new \Karix\Model\EditWebhook();
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $edit_webhook->setSmsNotificationUrl($sms_notification_url);
+        $this->assertEquals($sms_notification_url, $edit_webhook->getSmsNotificationUrl());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class EditWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationMethod()
     {
+        $edit_webhook = new \Karix\Model\EditWebhook();
+        $sms_notification_method = "POST";
+        
+        $edit_webhook->setSmsNotificationMethod($sms_notification_method);
+        $this->assertEquals($sms_notification_method, $edit_webhook->getSmsNotificationMethod());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class EditWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackUrl()
     {
+        $edit_webhook = new \Karix\Model\EditWebhook();
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $edit_webhook->setSmsNotificationFallbackUrl($sms_notification_fallback_url);
+        $this->assertEquals($sms_notification_fallback_url, $edit_webhook->getSmsNotificationFallbackUrl());
+
     }
 
     /**
@@ -102,6 +120,12 @@ class EditWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySmsNotificationFallbackMethod()
     {
+        $edit_webhook = new \Karix\Model\EditWebhook();
+        $sms_notification_fallback_method = "POST";
+        
+        $edit_webhook->setSmsNotificationFallbackMethod($sms_notification_fallback_method);
+        $this->assertEquals($sms_notification_fallback_method, $edit_webhook->getSmsNotificationFallbackMethod());
+
     }
 
     /**
@@ -109,5 +133,46 @@ class EditWebhookTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyName()
     {
+        $edit_webhook = new \Karix\Model\EditWebhook();
+        $name = "webhook_1";
+        
+        $edit_webhook->setName($name);
+        $this->assertEquals($name, $edit_webhook->getName());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $sms_notification_url = "https://notification.example.com/sms";
+        
+        $sms_notification_method = "POST";
+        
+        $sms_notification_fallback_url = "https://notification.example.com/sms";
+        
+        $sms_notification_fallback_method = "POST";
+        
+        $name = "webhook_1";
+        
+        return array(
+            "sms_notification_url" => $sms_notification_url,
+            "sms_notification_method" => $sms_notification_method,
+            "sms_notification_fallback_url" => $sms_notification_fallback_url,
+            "sms_notification_fallback_method" => $sms_notification_fallback_method,
+            "name" => $name,
+        );
+    }
+
+    /**
+    * Test EditWebhook validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $edit_webhook = new \Karix\Model\EditWebhook($example);
+        $this->assertTrue($edit_webhook->valid());
+    }
+
 }

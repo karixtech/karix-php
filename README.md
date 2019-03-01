@@ -96,12 +96,12 @@ Class | Method | HTTP request | Description
 *MessageApi* | [**getMessage**](docs/Api/MessageApi.md#getmessage) | **GET** /message/ | Get list of messages sent or received
 *MessageApi* | [**getMessageById**](docs/Api/MessageApi.md#getmessagebyid) | **GET** /message/{uid}/ | Get message details by id.
 *MessageApi* | [**sendMessage**](docs/Api/MessageApi.md#sendmessage) | **POST** /message/ | Send a message to a list of phone numbers
+*NumberApi* | [**deleteNumber**](docs/Api/NumberApi.md#deletenumber) | **DELETE** /number/{num}/ | Unrent number from your account
 *NumberApi* | [**getNumber**](docs/Api/NumberApi.md#getnumber) | **GET** /number/ | Get details of all phone numbers linked to your account.
-*NumberApi* | [**numberNumDelete**](docs/Api/NumberApi.md#numbernumdelete) | **DELETE** /number/{num}/ | Unrent number from your account
-*NumberApi* | [**numberNumGet**](docs/Api/NumberApi.md#numbernumget) | **GET** /number/{num}/ | Get details of a number
-*NumberApi* | [**numberNumPatch**](docs/Api/NumberApi.md#numbernumpatch) | **PATCH** /number/{num}/ | Edit phone number belonging to your account
+*NumberApi* | [**getNumberDetails**](docs/Api/NumberApi.md#getnumberdetails) | **GET** /number/{num}/ | Get details of a number
+*NumberApi* | [**patchNumberDetails**](docs/Api/NumberApi.md#patchnumberdetails) | **PATCH** /number/{num}/ | Edit phone number belonging to your account
 *NumberApi* | [**rentNumber**](docs/Api/NumberApi.md#rentnumber) | **POST** /number/ | Rent a phone number
-*NumberSearchApi* | [**numbersearchGet**](docs/Api/NumberSearchApi.md#numbersearchget) | **GET** /numbersearch/ | Query for phone numbers in our inventory.
+*NumberSearchApi* | [**searchNumber**](docs/Api/NumberSearchApi.md#searchnumber) | **GET** /numbersearch/ | Query for phone numbers in our inventory.
 *WebhookApi* | [**createWebhook**](docs/Api/WebhookApi.md#createwebhook) | **POST** /webhook/ | Create webhooks to receive Message
 *WebhookApi* | [**deleteWebhookById**](docs/Api/WebhookApi.md#deletewebhookbyid) | **DELETE** /webhook/{uid}/ | Delete a webhook by ID
 *WebhookApi* | [**getWebhook**](docs/Api/WebhookApi.md#getwebhook) | **GET** /webhook/ | Get a list of your webhooks

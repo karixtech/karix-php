@@ -81,5 +81,48 @@ class NotFoundResponseErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessage()
     {
+        $not_found_response_error = new \Karix\Model\NotFoundResponseError();
+        $message = "Not Found.";
+        
+        $not_found_response_error->setMessage($message);
+        $this->assertEquals($message, $not_found_response_error->getMessage());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message = "Not Found.";
+        
+        return array(
+            "message" => $message,
+        );
+    }
+
+    /**
+    * Test NotFoundResponseError validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $not_found_response_error = new \Karix\Model\NotFoundResponseError($example);
+        $this->assertTrue($not_found_response_error->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyMessage()
+    {
+        $example = $this->getGoodExample();
+        $example['message'] = null;
+        $not_found_response_error = new \Karix\Model\NotFoundResponseError($example);
+        $this->assertFalse($not_found_response_error->valid());
+
+        $invalidProperties = $not_found_response_error->listInvalidProperties();
+        $this->assertContains("'message' can't be null", $invalidProperties);
+    }
+
 }

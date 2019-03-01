@@ -81,6 +81,17 @@ class UnauthorizedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $unauthorized_response = new \Karix\Model\UnauthorizedResponse();
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $unauthorized_response->setMeta($meta);
+        $this->assertEquals($meta, $unauthorized_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class UnauthorizedResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyError()
     {
+        $unauthorized_response = new \Karix\Model\UnauthorizedResponse();
+        
+        
+        $subobj = new \Karix\Model\UnauthorizedResponseError();
+        
+
+        $error = $subobj;
+        
+        $unauthorized_response->setError($error);
+        $this->assertEquals($error, $unauthorized_response->getError());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\MetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\UnauthorizedResponseError();
+        
+
+        $error = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "error" => $error,
+        );
+    }
+
+    /**
+    * Test UnauthorizedResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $unauthorized_response = new \Karix\Model\UnauthorizedResponse($example);
+        $this->assertTrue($unauthorized_response->valid());
+    }
+
 }

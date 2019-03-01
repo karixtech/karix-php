@@ -81,6 +81,12 @@ class PhoneNumberRateTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyInboundSms()
     {
+        $phone_number_rate = new \Karix\Model\PhoneNumberRate();
+        $inbound_sms = "0.03";
+        
+        $phone_number_rate->setInboundSms($inbound_sms);
+        $this->assertEquals($inbound_sms, $phone_number_rate->getInboundSms());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class PhoneNumberRateTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRental()
     {
+        $phone_number_rate = new \Karix\Model\PhoneNumberRate();
+        $rental = "0.8";
+        
+        $phone_number_rate->setRental($rental);
+        $this->assertEquals($rental, $phone_number_rate->getRental());
+
     }
 
     /**
@@ -95,5 +107,40 @@ class PhoneNumberRateTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySetup()
     {
+        $phone_number_rate = new \Karix\Model\PhoneNumberRate();
+        $setup = "0.8";
+        
+        $phone_number_rate->setSetup($setup);
+        $this->assertEquals($setup, $phone_number_rate->getSetup());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $inbound_sms = "0.03";
+        
+        $rental = "0.8";
+        
+        $setup = "0.8";
+        
+        return array(
+            "inbound_sms" => $inbound_sms,
+            "rental" => $rental,
+            "setup" => $setup,
+        );
+    }
+
+    /**
+    * Test PhoneNumberRate validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $phone_number_rate = new \Karix\Model\PhoneNumberRate($example);
+        $this->assertTrue($phone_number_rate->valid());
+    }
+
 }

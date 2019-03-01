@@ -81,6 +81,12 @@ class AccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyWebhookUid()
     {
+        $account_number = new \Karix\Model\AccountNumber();
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $account_number->setWebhookUid($webhook_uid);
+        $this->assertEquals($webhook_uid, $account_number->getWebhookUid());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class AccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAlias()
     {
+        $account_number = new \Karix\Model\AccountNumber();
+        $alias = "Number 1";
+        
+        $account_number->setAlias($alias);
+        $this->assertEquals($alias, $account_number->getAlias());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class AccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAccountUid()
     {
+        $account_number = new \Karix\Model\AccountNumber();
+        $account_uid = "8bf925cd-1042-42b2-adc3-de43b64b9b02";
+        
+        $account_number->setAccountUid($account_uid);
+        $this->assertEquals($account_uid, $account_number->getAccountUid());
+
     }
 
     /**
@@ -102,6 +120,17 @@ class AccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyNumberDetails()
     {
+        $account_number = new \Karix\Model\AccountNumber();
+        
+        
+        $subobj = new \Karix\Model\PhoneNumber();
+        
+
+        $number_details = $subobj;
+        
+        $account_number->setNumberDetails($number_details);
+        $this->assertEquals($number_details, $account_number->getNumberDetails());
+
     }
 
     /**
@@ -109,5 +138,53 @@ class AccountNumberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyDateRented()
     {
+        $account_number = new \Karix\Model\AccountNumber();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $date_rented = $datetime;
+        
+        $account_number->setDateRented($date_rented);
+        $this->assertEquals($date_rented, $account_number->getDateRented());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $webhook_uid = "f6bcc10c-09c0-4bd5-9d58-0089fe51c3bb";
+        
+        $alias = "Number 1";
+        
+        $account_uid = "8bf925cd-1042-42b2-adc3-de43b64b9b02";
+        
+        
+        
+        $subobj = new \Karix\Model\PhoneNumber();
+        
+
+        $number_details = $subobj;
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $date_rented = $datetime;
+        
+        return array(
+            "webhook_uid" => $webhook_uid,
+            "alias" => $alias,
+            "account_uid" => $account_uid,
+            "number_details" => $number_details,
+            "date_rented" => $date_rented,
+        );
+    }
+
+    /**
+    * Test AccountNumber validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $account_number = new \Karix\Model\AccountNumber($example);
+        $this->assertTrue($account_number->valid());
+    }
+
 }

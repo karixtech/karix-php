@@ -81,6 +81,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyUid()
     {
+        $message = new \Karix\Model\Message();
+        $uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        $message->setUid($uid);
+        $this->assertEquals($uid, $message->getUid());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAccountUid()
     {
+        $message = new \Karix\Model\Message();
+        $account_uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        $message->setAccountUid($account_uid);
+        $this->assertEquals($account_uid, $message->getAccountUid());
+
     }
 
     /**
@@ -95,6 +107,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySource()
     {
+        $message = new \Karix\Model\Message();
+        $source = "14154009186";
+        
+        $message->setSource($source);
+        $this->assertEquals($source, $message->getSource());
+
     }
 
     /**
@@ -102,6 +120,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyDestination()
     {
+        $message = new \Karix\Model\Message();
+        $destination = "+15623158625";
+        
+        $message->setDestination($destination);
+        $this->assertEquals($destination, $message->getDestination());
+
     }
 
     /**
@@ -109,6 +133,26 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyStatus()
     {
+        $message = new \Karix\Model\Message();
+        $status = "delivered";
+        
+        $message->setStatus($status);
+        $this->assertEquals($status, $message->getStatus());
+
+        // Check for enum
+        $message->setStatus("queued");
+        $message->setStatus("sent");
+        $message->setStatus("failed");
+        $message->setStatus("delivered");
+        $message->setStatus("undelivered");
+        $message->setStatus("rejected");
+        try
+        {
+            $message->setStatus("Invalid Edwfere");
+            $this->fail("$message->setStatus accepted input outside of enum");
+        }
+        catch(\InvalidArgumentException $e){}
+
     }
 
     /**
@@ -116,6 +160,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyText()
     {
+        $message = new \Karix\Model\Message();
+        $text = "Hello Rick!";
+        
+        $message->setText($text);
+        $this->assertEquals($text, $message->getText());
+
     }
 
     /**
@@ -123,6 +173,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyQueuedTime()
     {
+        $message = new \Karix\Model\Message();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $queued_time = $datetime;
+        
+        $message->setQueuedTime($queued_time);
+        $this->assertEquals($queued_time, $message->getQueuedTime());
+
     }
 
     /**
@@ -130,6 +187,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertySentTime()
     {
+        $message = new \Karix\Model\Message();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $sent_time = $datetime;
+        
+        $message->setSentTime($sent_time);
+        $this->assertEquals($sent_time, $message->getSentTime());
+
     }
 
     /**
@@ -137,6 +201,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyUpdatedTime()
     {
+        $message = new \Karix\Model\Message();
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $updated_time = $datetime;
+        
+        $message->setUpdatedTime($updated_time);
+        $this->assertEquals($updated_time, $message->getUpdatedTime());
+
     }
 
     /**
@@ -144,6 +215,22 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyDirection()
     {
+        $message = new \Karix\Model\Message();
+        $direction = "outbound";
+        
+        $message->setDirection($direction);
+        $this->assertEquals($direction, $message->getDirection());
+
+        // Check for enum
+        $message->setDirection("inbound");
+        $message->setDirection("outbound");
+        try
+        {
+            $message->setDirection("Invalid Edwfere");
+            $this->fail("$message->setDirection accepted input outside of enum");
+        }
+        catch(\InvalidArgumentException $e){}
+
     }
 
     /**
@@ -151,6 +238,17 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyError()
     {
+        $message = new \Karix\Model\Message();
+        
+        
+        $subobj = new \Karix\Model\MessageError();
+        
+
+        $error = $subobj;
+        
+        $message->setError($error);
+        $this->assertEquals($error, $message->getError());
+
     }
 
     /**
@@ -158,6 +256,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRate()
     {
+        $message = new \Karix\Model\Message();
+        $rate = "0.0032";
+        
+        $message->setRate($rate);
+        $this->assertEquals($rate, $message->getRate());
+
     }
 
     /**
@@ -165,6 +269,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRefund()
     {
+        $message = new \Karix\Model\Message();
+        $refund = "example value";
+        
+        $message->setRefund($refund);
+        $this->assertEquals($refund, $message->getRefund());
+
     }
 
     /**
@@ -172,6 +282,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyTotalCost()
     {
+        $message = new \Karix\Model\Message();
+        $total_cost = "0.0032";
+        
+        $message->setTotalCost($total_cost);
+        $this->assertEquals($total_cost, $message->getTotalCost());
+
     }
 
     /**
@@ -179,6 +295,16 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyParts()
     {
+        $message = new \Karix\Model\Message();
+        
+        $subobj = 1;
+        
+
+        $parts = $subobj;
+        
+        $message->setParts($parts);
+        $this->assertEquals($parts, $message->getParts());
+
     }
 
     /**
@@ -186,6 +312,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessageType()
     {
+        $message = new \Karix\Model\Message();
+        $message_type = "sms";
+        
+        $message->setMessageType($message_type);
+        $this->assertEquals($message_type, $message->getMessageType());
+
     }
 
     /**
@@ -193,6 +325,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMobileCountryCode()
     {
+        $message = new \Karix\Model\Message();
+        $mobile_country_code = "400";
+        
+        $message->setMobileCountryCode($mobile_country_code);
+        $this->assertEquals($mobile_country_code, $message->getMobileCountryCode());
+
     }
 
     /**
@@ -200,5 +338,135 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMobileNetworkCode()
     {
+        $message = new \Karix\Model\Message();
+        $mobile_network_code = "400";
+        
+        $message->setMobileNetworkCode($mobile_network_code);
+        $this->assertEquals($mobile_network_code, $message->getMobileNetworkCode());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        $account_uid = "5a507caf-0769-4914-a7f7-54f5a064b52a";
+        
+        $source = "14154009186";
+        
+        $destination = "+15623158625";
+        
+        $status = "delivered";
+        
+        $text = "Hello Rick!";
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $queued_time = $datetime;
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $sent_time = $datetime;
+        
+        $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, '2017-08-04T09:59:29.660Z');
+        $updated_time = $datetime;
+        
+        $direction = "outbound";
+        
+        
+        
+        $subobj = new \Karix\Model\MessageError();
+        
+
+        $error = $subobj;
+        
+        $rate = "0.0032";
+        
+        $refund = "example value";
+        
+        $total_cost = "0.0032";
+        
+        
+        $subobj = 1;
+        
+
+        $parts = $subobj;
+        
+        $message_type = "sms";
+        
+        $mobile_country_code = "400";
+        
+        $mobile_network_code = "400";
+        
+        return array(
+            "uid" => $uid,
+            "account_uid" => $account_uid,
+            "source" => $source,
+            "destination" => $destination,
+            "status" => $status,
+            "text" => $text,
+            "queued_time" => $queued_time,
+            "sent_time" => $sent_time,
+            "updated_time" => $updated_time,
+            "direction" => $direction,
+            "error" => $error,
+            "rate" => $rate,
+            "refund" => $refund,
+            "total_cost" => $total_cost,
+            "parts" => $parts,
+            "message_type" => $message_type,
+            "mobile_country_code" => $mobile_country_code,
+            "mobile_network_code" => $mobile_network_code,
+        );
+    }
+
+    /**
+    * Test Message validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $message = new \Karix\Model\Message($example);
+        $this->assertTrue($message->valid());
+    }
+
+    /**
+    *
+    */
+    public function testEnumPropertyStatus()
+    {
+        $example = $this->getGoodExample();
+        $example['status'] = "Invalid Edwfere";
+        $message = new \Karix\Model\Message($example);
+        $this->assertFalse($message->valid());
+
+        $allowedValues = $message->getStatusAllowableValues();
+        $err_msg = sprintf(
+            "invalid value for 'status', must be one of '%s'",
+            implode("', '", $allowedValues)
+        );
+        $invalidProperties = $message->listInvalidProperties();
+        $this->assertContains($err_msg, $invalidProperties);
+    }
+
+    /**
+    *
+    */
+    public function testEnumPropertyDirection()
+    {
+        $example = $this->getGoodExample();
+        $example['direction'] = "Invalid Edwfere";
+        $message = new \Karix\Model\Message($example);
+        $this->assertFalse($message->valid());
+
+        $allowedValues = $message->getDirectionAllowableValues();
+        $err_msg = sprintf(
+            "invalid value for 'direction', must be one of '%s'",
+            implode("', '", $allowedValues)
+        );
+        $invalidProperties = $message->listInvalidProperties();
+        $this->assertContains($err_msg, $invalidProperties);
+    }
+
 }

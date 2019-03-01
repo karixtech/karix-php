@@ -81,6 +81,17 @@ class MessageResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $message_response = new \Karix\Model\MessageResponse();
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $message_response->setMeta($meta);
+        $this->assertEquals($meta, $message_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class MessageResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyData()
     {
+        $message_response = new \Karix\Model\MessageResponse();
+        
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $data = $subobj;
+        
+        $message_response->setData($data);
+        $this->assertEquals($data, $message_response->getData());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\Message();
+        
+
+        $data = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "data" => $data,
+        );
+    }
+
+    /**
+    * Test MessageResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $message_response = new \Karix\Model\MessageResponse($example);
+        $this->assertTrue($message_response->valid());
+    }
+
 }

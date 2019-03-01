@@ -88,6 +88,271 @@ class NumberApi
     }
 
     /**
+     * Operation deleteNumber
+     *
+     * Unrent number from your account
+     *
+     * @param  int $num Number which needs to be unrented (required)
+     *
+     * @throws \Karix\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteNumber($num)
+    {
+        $this->deleteNumberWithHttpInfo($num);
+    }
+
+    /**
+     * Operation deleteNumberWithHttpInfo
+     *
+     * Unrent number from your account
+     *
+     * @param  int $num Number which needs to be unrented (required)
+     *
+     * @throws \Karix\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteNumberWithHttpInfo($num)
+    {
+        $returnType = '';
+        $request = $this->deleteNumberRequest($num);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Karix\Model\UnauthorizedResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Karix\Model\NotFoundResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Karix\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteNumberAsync
+     *
+     * Unrent number from your account
+     *
+     * @param  int $num Number which needs to be unrented (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteNumberAsync($num)
+    {
+        return $this->deleteNumberAsyncWithHttpInfo($num)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteNumberAsyncWithHttpInfo
+     *
+     * Unrent number from your account
+     *
+     * @param  int $num Number which needs to be unrented (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteNumberAsyncWithHttpInfo($num)
+    {
+        $returnType = '';
+        $request = $this->deleteNumberRequest($num);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteNumber'
+     *
+     * @param  int $num Number which needs to be unrented (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function deleteNumberRequest($num)
+    {
+        // set constants with only one allowable value
+        $api_version = '1.0';
+        // verify the required parameter 'api_version' is set
+        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $api_version when calling deleteNumber'
+            );
+        }
+        // verify the required parameter 'num' is set
+        if ($num === null || (is_array($num) && count($num) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $num when calling deleteNumber'
+            );
+        }
+
+        $resourcePath = '/number/{num}/';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // header params
+        if ($api_version !== null) {
+            $headerParams['api-version'] = ObjectSerializer::toHeaderValue($api_version);
+        }
+
+        // path params
+        if ($num !== null) {
+            $resourcePath = str_replace(
+                '{' . 'num' . '}',
+                ObjectSerializer::toPathValue($num),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getNumber
      *
      * Get details of all phone numbers linked to your account.
@@ -411,272 +676,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumDelete
-     *
-     * Unrent number from your account
-     *
-     * @param  int $num Number which needs to be unrented (required)
-     *
-     * @throws \Karix\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function numberNumDelete($num)
-    {
-        $this->numberNumDeleteWithHttpInfo($num);
-    }
-
-    /**
-     * Operation numberNumDeleteWithHttpInfo
-     *
-     * Unrent number from your account
-     *
-     * @param  int $num Number which needs to be unrented (required)
-     *
-     * @throws \Karix\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function numberNumDeleteWithHttpInfo($num)
-    {
-        $returnType = '';
-        $request = $this->numberNumDeleteRequest($num);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation numberNumDeleteAsync
-     *
-     * Unrent number from your account
-     *
-     * @param  int $num Number which needs to be unrented (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function numberNumDeleteAsync($num)
-    {
-        return $this->numberNumDeleteAsyncWithHttpInfo($num)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation numberNumDeleteAsyncWithHttpInfo
-     *
-     * Unrent number from your account
-     *
-     * @param  int $num Number which needs to be unrented (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function numberNumDeleteAsyncWithHttpInfo($num)
-    {
-        $returnType = '';
-        $request = $this->numberNumDeleteRequest($num);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'numberNumDelete'
-     *
-     * @param  int $num Number which needs to be unrented (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function numberNumDeleteRequest($num)
-    {
-        // set constants with only one allowable value
-        $api_version = '1.0';
-        // verify the required parameter 'api_version' is set
-        if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $api_version when calling numberNumDelete'
-            );
-        }
-        // verify the required parameter 'num' is set
-        if ($num === null || (is_array($num) && count($num) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $num when calling numberNumDelete'
-            );
-        }
-
-        $resourcePath = '/number/{num}/';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // header params
-        if ($api_version !== null) {
-            $headerParams['api-version'] = ObjectSerializer::toHeaderValue($api_version);
-        }
-
-        // path params
-        if ($num !== null) {
-            $resourcePath = str_replace(
-                '{' . 'num' . '}',
-                ObjectSerializer::toPathValue($num),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            // $_tempBody is the method argument, if present
-            $httpBody = $_tempBody;
-            // \stdClass has no __toString(), so we should encode it manually
-            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($httpBody);
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation numberNumGet
+     * Operation getNumberDetails
      *
      * Get details of a number
      *
@@ -686,14 +686,14 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \Karix\Model\AccountNumberResponse
      */
-    public function numberNumGet($num)
+    public function getNumberDetails($num)
     {
-        list($response) = $this->numberNumGetWithHttpInfo($num);
+        list($response) = $this->getNumberDetailsWithHttpInfo($num);
         return $response;
     }
 
     /**
-     * Operation numberNumGetWithHttpInfo
+     * Operation getNumberDetailsWithHttpInfo
      *
      * Get details of a number
      *
@@ -703,10 +703,10 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return array of \Karix\Model\AccountNumberResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumGetWithHttpInfo($num)
+    public function getNumberDetailsWithHttpInfo($num)
     {
         $returnType = '\Karix\Model\AccountNumberResponse';
-        $request = $this->numberNumGetRequest($num);
+        $request = $this->getNumberDetailsRequest($num);
 
         try {
             $options = $this->createHttpClientOption();
@@ -792,7 +792,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumGetAsync
+     * Operation getNumberDetailsAsync
      *
      * Get details of a number
      *
@@ -801,9 +801,9 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumGetAsync($num)
+    public function getNumberDetailsAsync($num)
     {
-        return $this->numberNumGetAsyncWithHttpInfo($num)
+        return $this->getNumberDetailsAsyncWithHttpInfo($num)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -812,7 +812,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumGetAsyncWithHttpInfo
+     * Operation getNumberDetailsAsyncWithHttpInfo
      *
      * Get details of a number
      *
@@ -821,10 +821,10 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumGetAsyncWithHttpInfo($num)
+    public function getNumberDetailsAsyncWithHttpInfo($num)
     {
         $returnType = '\Karix\Model\AccountNumberResponse';
-        $request = $this->numberNumGetRequest($num);
+        $request = $this->getNumberDetailsRequest($num);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -864,27 +864,27 @@ class NumberApi
     }
 
     /**
-     * Create request for operation 'numberNumGet'
+     * Create request for operation 'getNumberDetails'
      *
      * @param  int $num Number for which details need to be fetched (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumGetRequest($num)
+    protected function getNumberDetailsRequest($num)
     {
         // set constants with only one allowable value
         $api_version = '1.0';
         // verify the required parameter 'api_version' is set
         if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_version when calling numberNumGet'
+                'Missing the required parameter $api_version when calling getNumberDetails'
             );
         }
         // verify the required parameter 'num' is set
         if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $num when calling numberNumGet'
+                'Missing the required parameter $num when calling getNumberDetails'
             );
         }
 
@@ -978,7 +978,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumPatch
+     * Operation patchNumberDetails
      *
      * Edit phone number belonging to your account
      *
@@ -989,14 +989,14 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \Karix\Model\AccountNumberResponse
      */
-    public function numberNumPatch($num, $number)
+    public function patchNumberDetails($num, $number)
     {
-        list($response) = $this->numberNumPatchWithHttpInfo($num, $number);
+        list($response) = $this->patchNumberDetailsWithHttpInfo($num, $number);
         return $response;
     }
 
     /**
-     * Operation numberNumPatchWithHttpInfo
+     * Operation patchNumberDetailsWithHttpInfo
      *
      * Edit phone number belonging to your account
      *
@@ -1007,10 +1007,10 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return array of \Karix\Model\AccountNumberResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function numberNumPatchWithHttpInfo($num, $number)
+    public function patchNumberDetailsWithHttpInfo($num, $number)
     {
         $returnType = '\Karix\Model\AccountNumberResponse';
-        $request = $this->numberNumPatchRequest($num, $number);
+        $request = $this->patchNumberDetailsRequest($num, $number);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1096,7 +1096,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumPatchAsync
+     * Operation patchNumberDetailsAsync
      *
      * Edit phone number belonging to your account
      *
@@ -1106,9 +1106,9 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsync($num, $number)
+    public function patchNumberDetailsAsync($num, $number)
     {
-        return $this->numberNumPatchAsyncWithHttpInfo($num, $number)
+        return $this->patchNumberDetailsAsyncWithHttpInfo($num, $number)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1117,7 +1117,7 @@ class NumberApi
     }
 
     /**
-     * Operation numberNumPatchAsyncWithHttpInfo
+     * Operation patchNumberDetailsAsyncWithHttpInfo
      *
      * Edit phone number belonging to your account
      *
@@ -1127,10 +1127,10 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function numberNumPatchAsyncWithHttpInfo($num, $number)
+    public function patchNumberDetailsAsyncWithHttpInfo($num, $number)
     {
         $returnType = '\Karix\Model\AccountNumberResponse';
-        $request = $this->numberNumPatchRequest($num, $number);
+        $request = $this->patchNumberDetailsRequest($num, $number);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1170,7 +1170,7 @@ class NumberApi
     }
 
     /**
-     * Create request for operation 'numberNumPatch'
+     * Create request for operation 'patchNumberDetails'
      *
      * @param  int $num Number which needs to be edited (required)
      * @param  \Karix\Model\EditAccountNumber $number Account Number object (required)
@@ -1178,26 +1178,26 @@ class NumberApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function numberNumPatchRequest($num, $number)
+    protected function patchNumberDetailsRequest($num, $number)
     {
         // set constants with only one allowable value
         $api_version = '1.0';
         // verify the required parameter 'api_version' is set
         if ($api_version === null || (is_array($api_version) && count($api_version) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_version when calling numberNumPatch'
+                'Missing the required parameter $api_version when calling patchNumberDetails'
             );
         }
         // verify the required parameter 'num' is set
         if ($num === null || (is_array($num) && count($num) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $num when calling numberNumPatch'
+                'Missing the required parameter $num when calling patchNumberDetails'
             );
         }
         // verify the required parameter 'number' is set
         if ($number === null || (is_array($number) && count($number) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $number when calling numberNumPatch'
+                'Missing the required parameter $number when calling patchNumberDetails'
             );
         }
 

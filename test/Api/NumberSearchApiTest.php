@@ -72,12 +72,12 @@ class NumberSearchApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for numbersearchGet
+     * Test case for searchNumber
      *
      * Query for phone numbers in our inventory..
      *
      */
-    public function testNumbersearchGet()
+    public function testSearchNumber()
     {
     }
 }

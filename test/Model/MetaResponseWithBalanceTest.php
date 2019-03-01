@@ -81,6 +81,12 @@ class MetaResponseWithBalanceTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRequestUuid()
     {
+        $meta_response_with_balance = new \Karix\Model\MetaResponseWithBalance();
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        $meta_response_with_balance->setRequestUuid($request_uuid);
+        $this->assertEquals($request_uuid, $meta_response_with_balance->getRequestUuid());
+
     }
 
     /**
@@ -88,6 +94,12 @@ class MetaResponseWithBalanceTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyCreditsCharged()
     {
+        $meta_response_with_balance = new \Karix\Model\MetaResponseWithBalance();
+        $credits_charged = "0.0032";
+        
+        $meta_response_with_balance->setCreditsCharged($credits_charged);
+        $this->assertEquals($credits_charged, $meta_response_with_balance->getCreditsCharged());
+
     }
 
     /**
@@ -95,5 +107,40 @@ class MetaResponseWithBalanceTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyAvailableCredits()
     {
+        $meta_response_with_balance = new \Karix\Model\MetaResponseWithBalance();
+        $available_credits = "43.0047";
+        
+        $meta_response_with_balance->setAvailableCredits($available_credits);
+        $this->assertEquals($available_credits, $meta_response_with_balance->getAvailableCredits());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        $credits_charged = "0.0032";
+        
+        $available_credits = "43.0047";
+        
+        return array(
+            "request_uuid" => $request_uuid,
+            "credits_charged" => $credits_charged,
+            "available_credits" => $available_credits,
+        );
+    }
+
+    /**
+    * Test MetaResponseWithBalance validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $meta_response_with_balance = new \Karix\Model\MetaResponseWithBalance($example);
+        $this->assertTrue($meta_response_with_balance->valid());
+    }
+
 }

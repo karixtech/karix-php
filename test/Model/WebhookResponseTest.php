@@ -81,6 +81,17 @@ class WebhookResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMeta()
     {
+        $webhook_response = new \Karix\Model\WebhookResponse();
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        $webhook_response->setMeta($meta);
+        $this->assertEquals($meta, $webhook_response->getMeta());
+
     }
 
     /**
@@ -88,5 +99,52 @@ class WebhookResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyData()
     {
+        $webhook_response = new \Karix\Model\WebhookResponse();
+        
+        
+        $subobj = new \Karix\Model\Webhook();
+        
+
+        $data = $subobj;
+        
+        $webhook_response->setData($data);
+        $this->assertEquals($data, $webhook_response->getData());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        
+        
+        $subobj = new \Karix\Model\ObjectMetaResponse();
+        
+
+        $meta = $subobj;
+        
+        
+        
+        $subobj = new \Karix\Model\Webhook();
+        
+
+        $data = $subobj;
+        
+        return array(
+            "meta" => $meta,
+            "data" => $data,
+        );
+    }
+
+    /**
+    * Test WebhookResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $webhook_response = new \Karix\Model\WebhookResponse($example);
+        $this->assertTrue($webhook_response->valid());
+    }
+
 }

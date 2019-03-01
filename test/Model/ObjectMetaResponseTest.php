@@ -81,5 +81,34 @@ class ObjectMetaResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyRequestUuid()
     {
+        $object_meta_response = new \Karix\Model\ObjectMetaResponse();
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        $object_meta_response->setRequestUuid($request_uuid);
+        $this->assertEquals($request_uuid, $object_meta_response->getRequestUuid());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $request_uuid = "e54b13f5-0831-40f1-959f-e9c5a8ff2957";
+        
+        return array(
+            "request_uuid" => $request_uuid,
+        );
+    }
+
+    /**
+    * Test ObjectMetaResponse validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $object_meta_response = new \Karix\Model\ObjectMetaResponse($example);
+        $this->assertTrue($object_meta_response->valid());
+    }
+
 }

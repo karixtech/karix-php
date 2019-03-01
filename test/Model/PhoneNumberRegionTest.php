@@ -81,5 +81,34 @@ class PhoneNumberRegionTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyCountry()
     {
+        $phone_number_region = new \Karix\Model\PhoneNumberRegion();
+        $country = "US";
+        
+        $phone_number_region->setCountry($country);
+        $this->assertEquals($country, $phone_number_region->getCountry());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $country = "US";
+        
+        return array(
+            "country" => $country,
+        );
+    }
+
+    /**
+    * Test PhoneNumberRegion validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $phone_number_region = new \Karix\Model\PhoneNumberRegion($example);
+        $this->assertTrue($phone_number_region->valid());
+    }
+
 }

@@ -81,6 +81,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * Array of property to type mappings. Used for (de)serialization
      *
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public static function swaggerTypes()
     {
@@ -91,6 +93,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * Array of property to format mappings. Used for (de)serialization
      *
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public static function swaggerFormats()
     {
@@ -102,6 +106,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * and the value is the original name
      *
      * @var string[]
+     *
+     * @codeCoverageIgnore
      */
     protected static $attributeMap = [
         'sms_notification_url' => 'sms_notification_url',
@@ -142,6 +148,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * and the value is the original name
      *
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public static function attributeMap()
     {
@@ -152,6 +160,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * Array of attributes to setter functions (for deserialization of responses)
      *
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public static function setters()
     {
@@ -162,6 +172,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * Array of attributes to getter functions (for serialization of requests)
      *
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public static function getters()
     {
@@ -172,6 +184,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * The original name of the model.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function getModelName()
     {
@@ -362,6 +376,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * @param integer $offset Offset
      *
      * @return boolean
+     *
+     * @codeCoverageIgnore
      */
     public function offsetExists($offset)
     {
@@ -374,6 +390,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * @param integer $offset Offset
      *
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     public function offsetGet($offset)
     {
@@ -387,6 +405,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * @param mixed   $value  Value to be set
      *
      * @return void
+     *
+     * @codeCoverageIgnore
      */
     public function offsetSet($offset, $value)
     {
@@ -403,6 +423,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * @param integer $offset Offset
      *
      * @return void
+     *
+     * @codeCoverageIgnore
      */
     public function offsetUnset($offset)
     {
@@ -413,6 +435,8 @@ class CreateWebhook implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function __toString()
     {

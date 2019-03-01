@@ -4,11 +4,11 @@ All URIs are relative to *https://api.karix.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**numbersearchGet**](NumberSearchApi.md#numbersearchGet) | **GET** /numbersearch/ | Query for phone numbers in our inventory.
+[**searchNumber**](NumberSearchApi.md#searchNumber) | **GET** /numbersearch/ | Query for phone numbers in our inventory.
 
 
-# **numbersearchGet**
-> \Karix\Model\PhoneNumberListResponse numbersearchGet($offset, $limit, $country, $prefix, $contains, $number_type)
+# **searchNumber**
+> \Karix\Model\PhoneNumberListResponse searchNumber($offset, $limit, $country, $prefix, $contains, $number_type)
 
 Query for phone numbers in our inventory.
 
@@ -39,10 +39,10 @@ $contains = "contains_example"; // string | Filter by numbers which contain this
 $number_type = array("number_type_example"); // string[] | Filter by number type: fixed, mobile, tollfree
 
 try {
-    $result = $apiInstance->numbersearchGet($offset, $limit, $country, $prefix, $contains, $number_type);
+    $result = $apiInstance->searchNumber($offset, $limit, $country, $prefix, $contains, $number_type);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling NumberSearchApi->numbersearchGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling NumberSearchApi->searchNumber: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```

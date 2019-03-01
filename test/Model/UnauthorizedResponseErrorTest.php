@@ -81,5 +81,48 @@ class UnauthorizedResponseErrorTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropertyMessage()
     {
+        $unauthorized_response_error = new \Karix\Model\UnauthorizedResponseError();
+        $message = "Forbidden";
+        
+        $unauthorized_response_error->setMessage($message);
+        $this->assertEquals($message, $unauthorized_response_error->getMessage());
+
     }
+
+    /**
+    * Helper to create a good example of model
+    */
+    public function getGoodExample()
+    {
+        $message = "Forbidden";
+        
+        return array(
+            "message" => $message,
+        );
+    }
+
+    /**
+    * Test UnauthorizedResponseError validation
+    */
+    public function testValidation()
+    {
+        $example = $this->getGoodExample();
+        $unauthorized_response_error = new \Karix\Model\UnauthorizedResponseError($example);
+        $this->assertTrue($unauthorized_response_error->valid());
+    }
+
+    /**
+    *
+    */
+    public function testRequiredPropertyMessage()
+    {
+        $example = $this->getGoodExample();
+        $example['message'] = null;
+        $unauthorized_response_error = new \Karix\Model\UnauthorizedResponseError($example);
+        $this->assertFalse($unauthorized_response_error->valid());
+
+        $invalidProperties = $unauthorized_response_error->listInvalidProperties();
+        $this->assertContains("'message' can't be null", $invalidProperties);
+    }
+
 }
