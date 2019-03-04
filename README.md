@@ -25,7 +25,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
     }
   ],
   "require": {
-    "karixtech/karix-php": "*@dev"
+    "karixtech/karix-php": "1.0.0"
   }
 }
 ```
