@@ -9,3 +9,5 @@ before_install:
   - travis_retry composer self-update
   - composer install
 script: ./vendor/bin/phpunit
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
