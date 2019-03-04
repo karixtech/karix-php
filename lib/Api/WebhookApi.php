@@ -81,6 +81,8 @@ class WebhookApi
 
     /**
      * @return Configuration
+     *
+     * @codeCoverageIgnore
      */
     public function getConfig()
     {
@@ -165,40 +167,7 @@ class WebhookApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\WebhookResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->createWebhookSetResponseObject($e);
             throw $e;
         }
     }
@@ -241,7 +210,22 @@ class WebhookApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->createWebhookSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -259,18 +243,31 @@ class WebhookApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->createWebhookSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -385,6 +382,47 @@ class WebhookApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function createWebhookSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 201:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\WebhookResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 400:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation deleteWebhookById
      *
      * Delete a webhook by ID
@@ -447,32 +485,7 @@ class WebhookApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->deleteWebhookByIdSetResponseObject($e);
             throw $e;
         }
     }
@@ -515,22 +528,50 @@ class WebhookApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->deleteWebhookByIdSetResponseObject($exception);
+                        throw $exception;
+                    }
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->deleteWebhookByIdSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -650,6 +691,39 @@ class WebhookApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function deleteWebhookByIdSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getWebhook
      *
      * Get a list of your webhooks
@@ -729,32 +803,7 @@ class WebhookApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\WebhookListResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getWebhookSetResponseObject($e);
             throw $e;
         }
     }
@@ -799,7 +848,22 @@ class WebhookApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getWebhookSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -817,18 +881,31 @@ class WebhookApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getWebhookSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -943,6 +1020,39 @@ class WebhookApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getWebhookSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\WebhookListResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getWebhookById
      *
      * Get a webhook by ID
@@ -1020,40 +1130,7 @@ class WebhookApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\WebhookResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getWebhookByIdSetResponseObject($e);
             throw $e;
         }
     }
@@ -1096,7 +1173,22 @@ class WebhookApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getWebhookByIdSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1114,18 +1206,31 @@ class WebhookApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getWebhookByIdSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -1245,6 +1350,47 @@ class WebhookApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getWebhookByIdSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\WebhookResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation patchWebhook
      *
      * Edit a webhook
@@ -1324,48 +1470,7 @@ class WebhookApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\WebhookResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->patchWebhookSetResponseObject($e);
             throw $e;
         }
     }
@@ -1410,7 +1515,22 @@ class WebhookApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->patchWebhookSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1428,18 +1548,31 @@ class WebhookApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->patchWebhookSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -1566,6 +1699,55 @@ class WebhookApi
             $headers,
             $httpBody
         );
+    }
+
+    /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function patchWebhookSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\WebhookResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 400:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
     }
 
     /**

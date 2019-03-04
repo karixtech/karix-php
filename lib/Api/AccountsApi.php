@@ -81,6 +81,8 @@ class AccountsApi
 
     /**
      * @return Configuration
+     *
+     * @codeCoverageIgnore
      */
     public function getConfig()
     {
@@ -165,40 +167,7 @@ class AccountsApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->createSubaccountSetResponseObject($e);
             throw $e;
         }
     }
@@ -241,7 +210,22 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->createSubaccountSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -259,18 +243,31 @@ class AccountsApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->createSubaccountSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -385,6 +382,47 @@ class AccountsApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function createSubaccountSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 201:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 400:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getSubaccount
      *
      * Get a list of accounts
@@ -464,32 +502,7 @@ class AccountsApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountListResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getSubaccountSetResponseObject($e);
             throw $e;
         }
     }
@@ -534,7 +547,22 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getSubaccountSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -552,18 +580,31 @@ class AccountsApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getSubaccountSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -678,6 +719,39 @@ class AccountsApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getSubaccountSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountListResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getSubaccountById
      *
      * Get details of an account
@@ -755,40 +829,7 @@ class AccountsApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getSubaccountByIdSetResponseObject($e);
             throw $e;
         }
     }
@@ -831,7 +872,22 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getSubaccountByIdSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -849,18 +905,31 @@ class AccountsApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getSubaccountByIdSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -980,6 +1049,47 @@ class AccountsApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getSubaccountByIdSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation patchSubaccount
      *
      * Edit an account
@@ -1059,40 +1169,7 @@ class AccountsApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->patchSubaccountSetResponseObject($e);
             throw $e;
         }
     }
@@ -1137,7 +1214,22 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->patchSubaccountSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1155,18 +1247,31 @@ class AccountsApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->patchSubaccountSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -1293,6 +1398,47 @@ class AccountsApi
             $headers,
             $httpBody
         );
+    }
+
+    /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function patchSubaccountSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
     }
 
     /**

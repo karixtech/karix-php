@@ -81,6 +81,8 @@ class NumberApi
 
     /**
      * @return Configuration
+     *
+     * @codeCoverageIgnore
      */
     public function getConfig()
     {
@@ -150,32 +152,7 @@ class NumberApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->deleteNumberSetResponseObject($e);
             throw $e;
         }
     }
@@ -218,22 +195,50 @@ class NumberApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->deleteNumberSetResponseObject($exception);
+                        throw $exception;
+                    }
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->deleteNumberSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -353,6 +358,39 @@ class NumberApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function deleteNumberSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getNumber
      *
      * Get details of all phone numbers linked to your account.
@@ -438,32 +476,7 @@ class NumberApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountNumberListResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getNumberSetResponseObject($e);
             throw $e;
         }
     }
@@ -514,7 +527,22 @@ class NumberApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getNumberSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -532,18 +560,31 @@ class NumberApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getNumberSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -676,6 +717,39 @@ class NumberApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getNumberSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountNumberListResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation getNumberDetails
      *
      * Get details of a number
@@ -753,40 +827,7 @@ class NumberApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountNumberResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->getNumberDetailsSetResponseObject($e);
             throw $e;
         }
     }
@@ -829,7 +870,22 @@ class NumberApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->getNumberDetailsSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -847,18 +903,31 @@ class NumberApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->getNumberDetailsSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -978,6 +1047,47 @@ class NumberApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function getNumberDetailsSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountNumberResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation patchNumberDetails
      *
      * Edit phone number belonging to your account
@@ -1057,40 +1167,7 @@ class NumberApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\AccountNumberResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->patchNumberDetailsSetResponseObject($e);
             throw $e;
         }
     }
@@ -1135,7 +1212,22 @@ class NumberApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->patchNumberDetailsSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1153,18 +1245,31 @@ class NumberApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->patchNumberDetailsSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -1294,6 +1399,47 @@ class NumberApi
     }
 
     /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function patchNumberDetailsSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 200:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\AccountNumberResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
+    }
+
+    /**
      * Operation rentNumber
      *
      * Rent a phone number
@@ -1371,56 +1517,7 @@ class NumberApi
             ];
 
         } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NumberRentedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\InsufficientBalanceResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\UnauthorizedResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\NotFoundResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Karix\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
+            $this->rentNumberSetResponseObject($e);
             throw $e;
         }
     }
@@ -1463,7 +1560,22 @@ class NumberApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function ($response) use ($request, $returnType) {
+                    $statusCode = $response->getStatusCode();
+                    if ($statusCode < 200 || $statusCode > 299) {
+                        $exception = new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                        $this->rentNumberSetResponseObject($exception);
+                        throw $exception;
+                    }
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1481,18 +1593,31 @@ class NumberApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                    if ($exception instanceof RequestException) {
+                        $response = $exception->getResponse();
+                        if ($response) {
+                            $statusCode = $response->getStatusCode();
+                            $e = new ApiException(
+                                sprintf(
+                                    '[%d] Error connecting to the API (%s)',
+                                    $statusCode,
+                                    $exception->getRequest()->getUri()
+                                ),
+                                $statusCode,
+                                $response->getHeaders(),
+                                $response->getBody()
+                            );
+                            $this->rentNumberSetResponseObject($e);
+                            throw $e;
+                        }
+                        throw new ApiException(
+                            "[{$exception->getCode()}] {$exception->getMessage()}",
+                            $exception->getCode(),
+                            $exception->getResponse() ? $exception->getResponse()->getHeaders() : null,
+                            $exception->getResponse() ? $exception->getResponse()->getBody()->getContents() : null
+                        );
+                    }
+                    throw $exception;
                 }
             );
     }
@@ -1604,6 +1729,63 @@ class NumberApi
             $headers,
             $httpBody
         );
+    }
+
+    /**
+    * Sets the response object for an ApiException based on status code
+    */
+    protected function rentNumberSetResponseObject($api_exception)
+    {
+        switch ($api_exception->getCode()) {
+            case 201:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NumberRentedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 400:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 402:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\InsufficientBalanceResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 403:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\UnauthorizedResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 404:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\NotFoundResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+            case 500:
+                $data = ObjectSerializer::deserialize(
+                    $api_exception->getResponseBody(),
+                    '\Karix\Model\ErrorResponse',
+                    $api_exception->getResponseHeaders()
+                );
+                $api_exception->setResponseObject($data);
+                break;
+        }
     }
 
     /**

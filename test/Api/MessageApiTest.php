@@ -79,6 +79,575 @@ class MessageApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessage()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling MessageApi->getMessage: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getMessage with RequestException
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No exception when calling MessageApi->getMessage with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getMessage with  response
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getMessage with  response
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getMessage($direction, $account_uid, $state, $offset, $limit);
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getMessage for required parameters
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+    }
+
+    /**
+     * Test case for getMessage Async
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling MessageApi->getMessage: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessage Async with RequestException
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No exception when calling MessageApi->getMessage with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessage Async with  response
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessage Async with  response
+     *
+     * Get list of messages sent or received.
+     *
+     */
+    public function testGetMessageErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $direction = "direction_example";
+        $account_uid = "account_uid_example";
+        $state = "state_example";
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getMessageAsync($direction, $account_uid, $state, $offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -89,6 +658,608 @@ class MessageApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessageById()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling MessageApi->getMessageById: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getMessageById with RequestException
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No exception when calling MessageApi->getMessageById with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getMessageById with  response
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getMessageById with  response
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getMessageById for required parameters
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $result = $apiInstance->getMessageById($uid);
+            $this->fail("No exception when calling MessageApi->getMessageById with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling getMessageById', $e->getMessage());
+        }
+        $uid = $_tempVal;
+    }
+
+    /**
+     * Test case for getMessageById Async
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling MessageApi->getMessageById: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessageById Async with RequestException
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No exception when calling MessageApi->getMessageById with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessageById Async with  response
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getMessageById Async with  response
+     *
+     * Get message details by id..
+     *
+     */
+    public function testGetMessageByIdErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getMessageByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->getMessageById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -99,5 +1270,699 @@ class MessageApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testSendMessage()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 202;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageCreatedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling MessageApi->sendMessage: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for sendMessage with RequestException
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No exception when calling MessageApi->sendMessage with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for sendMessage with  response
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 402;
+        // Create a mock response
+        $expected = new \Karix\Model\InsufficientBalanceResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for sendMessage with  response
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 402;
+        // Create a mock response
+        $expected = new \Karix\Model\InsufficientBalanceResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for sendMessage for required parameters
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 202;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageCreatedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $_tempVal = $message;
+        $message = null;
+        try {
+            $result = $apiInstance->sendMessage($message);
+            $this->fail("No exception when calling MessageApi->sendMessage with null message");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $message when calling sendMessage', $e->getMessage());
+        }
+        $message = $_tempVal;
+    }
+
+    /**
+     * Test case for sendMessage Async
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 202;
+        // Create a mock response
+        $expected = new \Karix\Model\MessageCreatedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling MessageApi->sendMessage: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for sendMessage Async with RequestException
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No exception when calling MessageApi->sendMessage with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for sendMessage Async with  response
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 402;
+        // Create a mock response
+        $expected = new \Karix\Model\InsufficientBalanceResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for sendMessage Async with  response
+     *
+     * Send a message to a list of phone numbers.
+     *
+     */
+    public function testSendMessageErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 402;
+        // Create a mock response
+        $expected = new \Karix\Model\InsufficientBalanceResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\MessageApi(
+            $client,
+            $config
+        );
+        $message = new \Karix\Model\CreateMessage();
+
+        $promise = $apiInstance->sendMessageAsync($message)->then(function ($result) {
+            $this->fail("No error response when calling MessageApi->sendMessage when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 }

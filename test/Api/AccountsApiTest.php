@@ -79,6 +79,608 @@ class AccountsApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSubaccount()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling AccountsApi->createSubaccount: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for createSubaccount with RequestException
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No exception when calling AccountsApi->createSubaccount with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for createSubaccount with  response
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for createSubaccount with  response
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for createSubaccount for required parameters
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $_tempVal = $subaccount;
+        $subaccount = null;
+        try {
+            $result = $apiInstance->createSubaccount($subaccount);
+            $this->fail("No exception when calling AccountsApi->createSubaccount with null subaccount");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $subaccount when calling createSubaccount', $e->getMessage());
+        }
+        $subaccount = $_tempVal;
+    }
+
+    /**
+     * Test case for createSubaccount Async
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling AccountsApi->createSubaccount: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createSubaccount Async with RequestException
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No exception when calling AccountsApi->createSubaccount with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createSubaccount Async with  response
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createSubaccount Async with  response
+     *
+     * Create a new subaccount.
+     *
+     */
+    public function testCreateSubaccountErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $subaccount = new \Karix\Model\CreateAccount();
+
+        $promise = $apiInstance->createSubaccountAsync($subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->createSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -89,6 +691,524 @@ class AccountsApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSubaccount()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling AccountsApi->getSubaccount: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getSubaccount with RequestException
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No exception when calling AccountsApi->getSubaccount with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getSubaccount with  response
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getSubaccount with  response
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getSubaccount($offset, $limit);
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getSubaccount for required parameters
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+    }
+
+    /**
+     * Test case for getSubaccount Async
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling AccountsApi->getSubaccount: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccount Async with RequestException
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No exception when calling AccountsApi->getSubaccount with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccount Async with  response
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccount Async with  response
+     *
+     * Get a list of accounts.
+     *
+     */
+    public function testGetSubaccountErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getSubaccountAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -99,6 +1219,608 @@ class AccountsApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSubaccountById()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling AccountsApi->getSubaccountById: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getSubaccountById with RequestException
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No exception when calling AccountsApi->getSubaccountById with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getSubaccountById with  response
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getSubaccountById with  response
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getSubaccountById for required parameters
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $result = $apiInstance->getSubaccountById($uid);
+            $this->fail("No exception when calling AccountsApi->getSubaccountById with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling getSubaccountById', $e->getMessage());
+        }
+        $uid = $_tempVal;
+    }
+
+    /**
+     * Test case for getSubaccountById Async
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling AccountsApi->getSubaccountById: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccountById Async with RequestException
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No exception when calling AccountsApi->getSubaccountById with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccountById Async with  response
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getSubaccountById Async with  response
+     *
+     * Get details of an account.
+     *
+     */
+    public function testGetSubaccountByIdErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getSubaccountByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->getSubaccountById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -109,5 +1831,637 @@ class AccountsApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testPatchSubaccount()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling AccountsApi->patchSubaccount: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for patchSubaccount with RequestException
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('PATCH', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No exception when calling AccountsApi->patchSubaccount with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for patchSubaccount with  response
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for patchSubaccount with  response
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for patchSubaccount for required parameters
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No exception when calling AccountsApi->patchSubaccount with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling patchSubaccount', $e->getMessage());
+        }
+        $uid = $_tempVal;
+        $_tempVal = $subaccount;
+        $subaccount = null;
+        try {
+            $result = $apiInstance->patchSubaccount($uid, $subaccount);
+            $this->fail("No exception when calling AccountsApi->patchSubaccount with null subaccount");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $subaccount when calling patchSubaccount', $e->getMessage());
+        }
+        $subaccount = $_tempVal;
+    }
+
+    /**
+     * Test case for patchSubaccount Async
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\AccountResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling AccountsApi->patchSubaccount: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchSubaccount Async with RequestException
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('PATCH', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No exception when calling AccountsApi->patchSubaccount with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchSubaccount Async with  response
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchSubaccount Async with  response
+     *
+     * Edit an account.
+     *
+     */
+    public function testPatchSubaccountErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\AccountsApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $subaccount = new \Karix\Model\EditAccount();
+
+        $promise = $apiInstance->patchSubaccountAsync($uid, $subaccount)->then(function ($result) {
+            $this->fail("No error response when calling AccountsApi->patchSubaccount when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 }

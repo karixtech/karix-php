@@ -79,6 +79,608 @@ class WebhookApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateWebhook()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling WebhookApi->createWebhook: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for createWebhook with RequestException
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No exception when calling WebhookApi->createWebhook with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for createWebhook with  response
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for createWebhook with  response
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for createWebhook for required parameters
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $_tempVal = $webhook;
+        $webhook = null;
+        try {
+            $result = $apiInstance->createWebhook($webhook);
+            $this->fail("No exception when calling WebhookApi->createWebhook with null webhook");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $webhook when calling createWebhook', $e->getMessage());
+        }
+        $webhook = $_tempVal;
+    }
+
+    /**
+     * Test case for createWebhook Async
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 201;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling WebhookApi->createWebhook: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createWebhook Async with RequestException
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('POST', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No exception when calling WebhookApi->createWebhook with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createWebhook Async with  response
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for createWebhook Async with  response
+     *
+     * Create webhooks to receive Message.
+     *
+     */
+    public function testCreateWebhookErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $webhook = new \Karix\Model\CreateWebhook();
+
+        $promise = $apiInstance->createWebhookAsync($webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->createWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -89,6 +691,552 @@ class WebhookApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteWebhookById()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 204;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling WebhookApi->deleteWebhookById: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for deleteWebhookById with RequestException
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('DELETE', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No exception when calling WebhookApi->deleteWebhookById with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for deleteWebhookById with  response
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 403;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 404;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 500;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+    }
+
+    /**
+     * Test case for deleteWebhookById with  response
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 403;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 404;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+        $expected_code = 500;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+        }
+    }
+
+    /**
+     * Test case for deleteWebhookById for required parameters
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 204;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $apiInstance->deleteWebhookById($uid);
+            $this->fail("No exception when calling WebhookApi->deleteWebhookById with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling deleteWebhookById', $e->getMessage());
+        }
+        $uid = $_tempVal;
+    }
+
+    /**
+     * Test case for deleteWebhookById Async
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 204;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+        }, function ($exception) {
+            $this->fail("Exception when calling WebhookApi->deleteWebhookById: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for deleteWebhookById Async with RequestException
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('DELETE', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No exception when calling WebhookApi->deleteWebhookById with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for deleteWebhookById Async with  response
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for deleteWebhookById Async with  response
+     *
+     * Delete a webhook by ID.
+     *
+     */
+    public function testDeleteWebhookByIdErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], null),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->deleteWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->deleteWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+        });
+        $promise->wait();
     }
 
     /**
@@ -99,6 +1247,524 @@ class WebhookApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWebhook()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling WebhookApi->getWebhook: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getWebhook with RequestException
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No exception when calling WebhookApi->getWebhook with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getWebhook with  response
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getWebhook with  response
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        try {
+            $result = $apiInstance->getWebhook($offset, $limit);
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getWebhook for required parameters
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+    }
+
+    /**
+     * Test case for getWebhook Async
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookListResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling WebhookApi->getWebhook: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhook Async with RequestException
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No exception when calling WebhookApi->getWebhook with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhook Async with  response
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhook Async with  response
+     *
+     * Get a list of your webhooks.
+     *
+     */
+    public function testGetWebhookErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $offset = 0;
+        $limit = 10;
+
+        $promise = $apiInstance->getWebhookAsync($offset, $limit)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -109,6 +1775,608 @@ class WebhookApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWebhookById()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling WebhookApi->getWebhookById: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getWebhookById with RequestException
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No exception when calling WebhookApi->getWebhookById with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for getWebhookById with  response
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getWebhookById with  response
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for getWebhookById for required parameters
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $result = $apiInstance->getWebhookById($uid);
+            $this->fail("No exception when calling WebhookApi->getWebhookById with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling getWebhookById', $e->getMessage());
+        }
+        $uid = $_tempVal;
+    }
+
+    /**
+     * Test case for getWebhookById Async
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling WebhookApi->getWebhookById: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhookById Async with RequestException
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('GET', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No exception when calling WebhookApi->getWebhookById with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhookById Async with  response
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for getWebhookById Async with  response
+     *
+     * Get a webhook by ID.
+     *
+     */
+    public function testGetWebhookByIdErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+
+        $promise = $apiInstance->getWebhookByIdAsync($uid)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->getWebhookById when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 
     /**
@@ -119,5 +2387,733 @@ class WebhookApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testPatchWebhook()
     {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->assertEquals($expected, $result);
+        } catch (Exception $e) {
+            $this->fail("Exception when calling WebhookApi->patchWebhook: ".$e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for patchWebhook with RequestException
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookException()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('PATCH', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No exception when calling WebhookApi->patchWebhook with mocked exception");
+        } catch (ApiException $e) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $e->getMessage());
+        }
+    }
+
+    /**
+     * Test case for patchWebhook with  response
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookHTTPErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for patchWebhook with  response
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookErrorResponses()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        } catch (ApiException $e) {
+            $this->assertEquals($expected_code, $e->getCode());
+            $this->assertEquals($expected, $e->getResponseObject());
+        }
+    }
+
+    /**
+     * Test case for patchWebhook for required parameters
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookRequiredParams()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $_tempVal = $uid;
+        $uid = null;
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No exception when calling WebhookApi->patchWebhook with null uid");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $uid when calling patchWebhook', $e->getMessage());
+        }
+        $uid = $_tempVal;
+        $_tempVal = $webhook;
+        $webhook = null;
+        try {
+            $result = $apiInstance->patchWebhook($uid, $webhook);
+            $this->fail("No exception when calling WebhookApi->patchWebhook with null webhook");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Missing the required parameter $webhook when calling patchWebhook', $e->getMessage());
+        }
+        $webhook = $_tempVal;
+    }
+
+    /**
+     * Test case for patchWebhook Async
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 200;
+        // Create a mock response
+        $expected = new \Karix\Model\WebhookResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) use( &$expected) {
+            $this->assertEquals($expected, $result);
+        }, function ($exception) {
+            $this->fail("Exception when calling WebhookApi->patchWebhook: ".$e->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchWebhook Async with RequestException
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookExceptionAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_exception = new \GuzzleHttp\Exception\RequestException(
+            "Error Communicating with Server",
+            new \GuzzleHttp\Psr7\Request('PATCH', 'test')
+        );
+        $mock = new \GuzzleHttp\Handler\MockHandler([$expected_exception]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No exception when calling WebhookApi->patchWebhook with mocked exception");
+        }, function ($exception) use( &$expected_exception) {
+            $this->assertEquals("[0] ".$expected_exception->getMessage(), $exception->getMessage());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchWebhook Async with  response
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookHTTPErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+    }
+
+    /**
+     * Test case for patchWebhook Async with  response
+     *
+     * Edit a webhook.
+     *
+     */
+    public function testPatchWebhookErrorResponsesAsync()
+    {
+        // Configure HTTP basic authorization: basicAuth
+        $config = Configuration::getDefaultConfiguration()
+                      ->setUsername('YOUR_USERNAME')
+                      ->setPassword('YOUR_PASSWORD');
+
+        $expected_code = 400;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 401;
+        // Create a mock response
+        $expected = null;
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 403;
+        // Create a mock response
+        $expected = new \Karix\Model\UnauthorizedResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 404;
+        // Create a mock response
+        $expected = new \Karix\Model\NotFoundResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
+        $expected_code = 500;
+        // Create a mock response
+        $expected = new \Karix\Model\ErrorResponse();
+        // Create a mock handler
+        $mock = new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response($expected_code, [], $expected),
+        ]);
+        $handler = \GuzzleHttp\HandlerStack::create($mock);
+        $client = new \GuzzleHttp\Client(['handler' => $handler, 'http_errors' => false]);
+
+        $apiInstance = new Api\WebhookApi(
+            $client,
+            $config
+        );
+        $uid = "uid_example";
+        $webhook = new \Karix\Model\EditWebhook();
+
+        $promise = $apiInstance->patchWebhookAsync($uid, $webhook)->then(function ($result) {
+            $this->fail("No error response when calling WebhookApi->patchWebhook when mocked to return error");
+        }, function ($exception) use(&$expected_code, &$expected) {
+            $this->assertEquals($expected_code, $exception->getCode());
+            $this->assertEquals($expected, $exception->getResponseObject());
+        });
+        $promise->wait();
     }
 }
