@@ -1,5 +1,5 @@
 # karix-php
-[![Build Status](https://travis-ci.org/karixtech/karix-php.svg?branch=v1)](https://travis-ci.org/karixtech/karix-php) [![Coverage Status](https://coveralls.io/repos/github/karixtech/karix-php/badge.svg?branch=v1)](https://coveralls.io/github/karixtech/karix-php?branch=v1)
+[![Build Status](https://travis-ci.org/karixtech/karix-php.svg?branch=v2)](https://travis-ci.org/karixtech/karix-php) [![Coverage Status](https://coveralls.io/repos/github/karixtech/karix-php/badge.svg?branch=v2)](https://coveralls.io/github/karixtech/karix-php?branch=v2)
 
 Karix API lets you interact with the Karix platform using an omnichannel messaging API. It also allows you to query your account, set up webhooks and buy phone numbers.
 
@@ -71,10 +71,11 @@ $apiInstance = new Karix\Api\MessageApi(
 );
 date_default_timezone_set('UTC');
 // Create Message object
-$message = new \Karix\Model\CreateMessage()
+$message = (new \Karix\Model\CreateMessage())
+    ->setChannel("sms") //Or use "whatsapp"
     ->setSource("+1XXX2321XXX")
     ->setDestination(["+1XXX8323XXX", "+1XXX3234XXX"])
-    ->setText("Sent from Karix PHP SDK");
+    ->setContent(["text" => "Sent from Karix PHP SDK"]);
 
 try {
     $result = $apiInstance->sendMessage($message);
