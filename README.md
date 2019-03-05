@@ -60,8 +60,8 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 // Configure HTTP basic authorization: basicAuth
 $config = Karix\Configuration::getDefaultConfiguration()
-    ->setUsername('YOUR_USERNAME')
-    ->setPassword('YOUR_PASSWORD');
+    ->setUsername('ACCOUNT_ID')
+    ->setPassword('ACCOUNT_TOKEN');
 
 $apiInstance = new Karix\Api\MessageApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
