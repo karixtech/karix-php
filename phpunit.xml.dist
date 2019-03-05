@@ -6,7 +6,7 @@
          convertWarningsToExceptions="true"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="karix">
+        <testsuite name="swagger_client">
             <directory>./test/Api</directory>
             <directory>./test/Model</directory>
         </testsuite>

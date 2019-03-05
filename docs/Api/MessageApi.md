@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getMessage**](MessageApi.md#getMessage) | **GET** /message/ | Get list of messages sent or received
 [**getMessageById**](MessageApi.md#getMessageById) | **GET** /message/{uid}/ | Get message details by id.
-[**sendMessage**](MessageApi.md#sendMessage) | **POST** /message/ | Send a message to a list of phone numbers
+[**sendMessage**](MessageApi.md#sendMessage) | **POST** /message/ | Send a message to a list of destinations
 
 
 # **getMessage**
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 Get list of messages sent or received
 
-Get list of messages sent or received. Sorted by descending order of `queued_time` (latest messages are first)
+Get list of messages sent or received. Sorted by descending order of `created_time` (latest messages are first)
 
 ### Example
 ```php
@@ -132,9 +132,9 @@ Name | Type | Description  | Notes
 # **sendMessage**
 > \Karix\Model\MessageCreatedResponse sendMessage($message)
 
-Send a message to a list of phone numbers
+Send a message to a list of destinations
 
-Send a message to a list of destinations.   - A successful `202` response means that a message record has been created in Karix.     It does not mean that each message was successfully `queued`, `sent` or `delivered`.   - To know the status of the message check the parameter `status` of the message record.   - Message records might be created with a `failed` state due issues with Karix or     validation issues. Please check `error` to know the reason of the failure.     No balance is deducted and `total_cost` is always zero for such cases.   - Message records might be updated to state `undelivered`. This is due to carrier/operator     related issues. Please check `error` to know the reason of the failure.     Balance is still deducted for such cases.   - Since this is a bulk API the response structure follows the List Response format     rather than the Single Response format.   - Once queued, the messages for your account are dequeued and processed at a     rate set for your account (defaults to 5 messages per second).     Contact [sales](support@karix.io) to get your rate limit increased.   - For fair usage, there is no rate limiting for queueing messages using this     API. Dequeue rate would still be applicable as stated.
+Send a message to a list of destinations.   - A successful `202` response means that a message record has been created in Karix.     It does not mean that each message was successfully `queued`, `sent` or `delivered`.   - To know the status of the message check the parameter `status` of the message record.   - Message records might be created with a `failed` state due issues with Karix platform or     validation issues. Please check `error_code` to know the reason of the failure.     No balance is deducted and `total_cost` is always zero for such cases.   - Message records might be updated to state `undelivered`. This is due to carrier/operator     related issues. Please check `error_code` to know the reason of the failure.     Balance is still deducted for such cases.   - Since this is a bulk API the response structure follows the List Response format     rather than the Single Response format.   - Once queued, the messages for your account are dequeued and processed at a     rate set for your account (defaults to 5 messages per second).     Contact [sales](mailto:support@karix.io) to get your rate limit increased.   - For fair usage, there is no rate limiting for queueing messages using this     API. Dequeue rate would still be applicable as stated.
 
 ### Example
 ```php
