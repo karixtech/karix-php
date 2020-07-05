@@ -265,7 +265,9 @@ class ObjectSerializer
                 return null;
             }
         } else if ($class === 'BigDecimal') {
-            return BigDecimal::of($data);
+            // TODO: use BigDecimal as following
+            // return BigDecimal::of($data);
+            return $data;
         } elseif (in_array($class, ['DateTime', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
             settype($data, $class);
             return $data;
