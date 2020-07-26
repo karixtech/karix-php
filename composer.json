@@ -23,7 +23,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^6.2",
+        "guzzlehttp/guzzle": "^5.3.3|^6.2|^7.0",
         "brick/math": "^0.5.4"
     },
     "require-dev": {
